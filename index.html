@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Bouquets</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #F5F6EF;
+    --forest: #1F3D2B;
+    --forest-dark: #16301F;
+    --sage: #8FA07E;
+    --gold: #C9A227;
+    --text: #172318;
+    --text-muted: #3C4A3E;
+    --text-soft: #5B6B5D;
+    --label: #6B7A6D;
+    --line: rgba(23,35,24,0.10);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ivory); color: var(--text); font-family: 'Karla', sans-serif; }
+  a { color: inherit; text-decoration: none; }
+  img, svg { max-width: 100%; }
+
+  .nav-link { color: var(--text-muted); transition: color 0.15s; }
+  .nav-link:hover { color: var(--forest); }
+  .cta { background: var(--forest); color: var(--ivory); padding: 14px 28px; border-radius: 3px; font-size: 15px; font-weight: 500; display: inline-block; border: none; cursor: pointer; transition: background 0.15s; }
+  .cta:hover { background: var(--forest-dark); }
+  .cta-small { padding: 11px 22px; font-size: 14px; }
+  .ghost-cta { border: 1px solid var(--forest); color: var(--forest); padding: 14px 28px; border-radius: 3px; font-size: 15px; font-weight: 500; display: inline-block; transition: background 0.15s; }
+  .ghost-cta:hover { background: rgba(31,61,43,0.08); }
+
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 6vw; border-bottom: 1px solid var(--line); }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-name { font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; font-size: 19px; color: var(--forest); }
+  .nav-links { display: flex; align-items: center; gap: 36px; font-size: 15px; }
+
+  .hero { display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 48px; padding: 9vh 6vw 10vh; max-width: 1320px; margin: 0 auto; }
+  .hero-eyebrow { font-size: 14px; letter-spacing: 0.02em; color: var(--label); margin: 0 0 18px; }
+  .hero h1 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(38px,5vw,64px); line-height: 1.08; margin: 0 0 26px; }
+  .hero h1 em { font-style: italic; color: var(--forest); }
+  .hero p { font-size: 18px; line-height: 1.6; color: var(--text-muted); max-width: 480px; margin: 0 0 34px; }
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-mark { justify-self: end; }
+
+  section { padding: 9vh 6vw; }
+  .section-label { font-size: 14px; color: var(--label); margin: 0 0 10px; }
+
+  #difference { background: #FFFFFF; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  #difference h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(28px,3.2vw,38px); margin: 0 0 44px; max-width: 640px; line-height: 1.25; }
+  .diff-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 28px; max-width: 1100px; margin: 0 auto; }
+  .diff-grid > div { max-width: 1100px; }
+  .diff-icon { width: 34px; height: 34px; margin-bottom: 16px; }
+  .diff-grid h3 { font-size: 17px; font-weight: 600; margin: 0 0 8px; }
+  .diff-grid p { font-size: 15px; line-height: 1.6; color: var(--text-soft); margin: 0; }
+
+  #events { padding: 10vh 6vw; }
+  .events-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 0.85fr 1.15fr; align-items: center; gap: 56px; }
+  .events-card { background: #FFFFFF; border: 1px solid var(--line); border-radius: 6px; padding: 48px 40px; display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+  .events-card p:first-of-type { font-size: 14px; color: var(--label); margin: 0 0 2px; }
+  .events-card p.lockup-name { font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; font-size: 27px; color: var(--forest); margin: 0; }
+  #events h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(26px,3vw,34px); margin: 0 0 20px; line-height: 1.25; }
+  #events > .events-grid > div:last-child p { font-size: 16px; line-height: 1.65; color: var(--text-muted); max-width: 480px; margin: 0 0 30px; }
+
+  #contact { background: #FFFFFF; border-top: 1px solid var(--line); padding: 9vh 6vw 6vh; }
+  .contact-wrap { max-width: 1100px; margin: 0 auto; }
+  #contact h2 { font-family: 'Fraunces', serif; font-weight: 500; font-style: italic; font-size: clamp(28px,3.4vw,42px); margin: 0 0 16px; max-width: 560px; line-height: 1.2; color: var(--forest); }
+  #contact > .contact-wrap > p { font-size: 16px; line-height: 1.6; color: var(--text-soft); max-width: 460px; margin: 0 0 40px; }
+  .contact-grid { display: flex; flex-wrap: wrap; gap: 56px; padding-top: 36px; border-top: 1px solid var(--line); }
+  .contact-grid p:first-child { font-size: 13px; color: var(--label); margin: 0 0 8px; }
+  .contact-grid p:last-child { font-size: 16px; margin: 0; }
+
+  /* --- scroll-triggered logo sequence --- */
+  .events-stage { position: relative; width: 220px; height: 220px; }
+  .events-stage .seq-logo,
+  .events-stage .seq-events { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .events-stage .seq-events { opacity: 0; transform: scale(0.55); }
+  .events-stage .petal {
+    position: absolute; left: 50%; top: 50%; width: 10px; height: 4px; margin: -2px 0 0 -5px;
+    border-radius: 6px; opacity: 0;
+  }
+  @keyframes seqLogoZoomDrop {
+    0%   { opacity: 1; transform: scale(1)    translateY(0); }
+    28%  { opacity: 1; transform: scale(1.32) translateY(-6px); }
+    46%  { opacity: 1; transform: scale(1.24) translateY(-4px); }
+    78%  { opacity: 1; transform: scale(0.85) translateY(64px); }
+    100% { opacity: 0; transform: scale(0.6)  translateY(88px); }
+  }
+  @keyframes seqPetalBurst {
+    0%   { opacity: 0; transform: rotate(var(--rot)) translateY(0)    scale(1); }
+    16%  { opacity: 1; }
+    100% { opacity: 0; transform: rotate(var(--rot)) translateY(-88px) scale(0.4); }
+  }
+  @keyframes seqMergeIn {
+    0%   { opacity: 0; transform: scale(0.55) translateY(8px); }
+    100% { opacity: 1; transform: scale(1)    translateY(0); }
+  }
+  .events-stage.play .seq-logo   { animation: seqLogoZoomDrop 1.5s cubic-bezier(.32,.1,.3,1) both; }
+  .events-stage.play .petal      { animation: seqPetalBurst 1s cubic-bezier(.16,.84,.44,1) 1.25s both; }
+  .events-stage.play .seq-events { animation: seqMergeIn 0.9s cubic-bezier(.22,.85,.32,1) 1.7s both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .events-stage .seq-logo   { opacity: 0 !important; }
+    .events-stage .seq-events { opacity: 1 !important; transform: none !important; }
+    .events-stage .petal      { display: none !important; }
+  }
+  @media (max-width: 860px) {
+    .nav-links { display: none !important; }
+    .hero { grid-template-columns: 1fr !important; }
+    .hero-mark { order: -1; justify-self: center !important; margin-bottom: 24px; }
+    .diff-grid { grid-template-columns: 1fr 1fr !important; }
+    .events-grid { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 560px) {
+    .diff-grid { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="brand">
+    <svg width="30" height="30" viewBox="0 0 120 120" aria-hidden="true">
+      <path d="M42,112 L78,112 L60,74 Z" fill="#8FA07E" stroke="#1F3D2B" stroke-width="2"></path>
+      <line x1="60" y1="74" x2="24.6" y2="32.9" stroke="#1F3D2B" stroke-width="2.5" stroke-linecap="round"></line>
+      <line x1="60" y1="74" x2="41.2" y2="23.3" stroke="#1F3D2B" stroke-width="2.5" stroke-linecap="round"></line>
+      <line x1="60" y1="74" x2="60" y2="20" stroke="#1F3D2B" stroke-width="2.5" stroke-linecap="round"></line>
+      <line x1="60" y1="74" x2="78.8" y2="23.3" stroke="#1F3D2B" stroke-width="2.5" stroke-linecap="round"></line>
+      <line x1="60" y1="74" x2="95.4" y2="32.9" stroke="#1F3D2B" stroke-width="2.5" stroke-linecap="round"></line>
+      <ellipse cx="24.6" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-40 24.6 32.9)"></ellipse>
+      <ellipse cx="41.2" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(-20 41.2 23.3)"></ellipse>
+      <ellipse cx="60" cy="20" rx="13" ry="5.5" fill="#C9A227" transform="rotate(0 60 20)"></ellipse>
+      <ellipse cx="78.8" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(20 78.8 23.3)"></ellipse>
+      <ellipse cx="95.4" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(40 95.4 32.9)"></ellipse>
+    </svg>
+    <span class="brand-name">The Bouquets</span>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link" href="#difference">The idea</a>
+    <a class="nav-link" href="#events">Events</a>
+    <a class="nav-link" href="#contact">Contact</a>
+  </div>
+  <a class="cta cta-small" href="#contact">Get in touch</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <p class="hero-eyebrow">Lahore, Pakistan</p>
+    <h1>Any gift, gathered <em>like a bouquet.</em></h1>
+    <p>We started with flowers. Now we arrange anything worth giving — skincare, snacks, little everyday things — into a bouquet, wrapped and bound the same careful way.</p>
+    <div class="hero-ctas">
+      <a class="cta" href="#contact">Order a bouquet</a>
+      <a class="ghost-cta" href="#events">See Events by The Bouquets</a>
+    </div>
+  </div>
+  <div class="hero-mark">
+    <svg width="280" height="280" viewBox="0 0 120 120" aria-hidden="true">
+      <path d="M42,112 L78,112 L60,74 Z" fill="#8FA07E" stroke="#1F3D2B" stroke-width="1.6"></path>
+      <line x1="60" y1="74" x2="24.6" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+      <line x1="60" y1="74" x2="41.2" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+      <line x1="60" y1="74" x2="60" y2="20" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+      <line x1="60" y1="74" x2="78.8" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+      <line x1="60" y1="74" x2="95.4" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+      <ellipse cx="24.6" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-40 24.6 32.9)"></ellipse>
+      <ellipse cx="41.2" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(-20 41.2 23.3)"></ellipse>
+      <ellipse cx="60" cy="20" rx="13" ry="5.5" fill="#C9A227" transform="rotate(0 60 20)"></ellipse>
+      <ellipse cx="78.8" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(20 78.8 23.3)"></ellipse>
+      <ellipse cx="95.4" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(40 95.4 32.9)"></ellipse>
+    </svg>
+  </div>
+</div>
+
+<!-- THE DIFFERENCE -->
+<section id="difference">
+  <p class="section-label">The idea</p>
+  <h2>A bouquet was never really about the flowers. It's about how the giving looks.</h2>
+  <div class="diff-grid">
+    <div>
+      <div class="diff-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-4.35-9.5-8.5C.5 8.8 2.6 5 6.2 5c2 0 3.4 1.1 4 2.3.6-1.2 2-2.3 4-2.3 3.6 0 5.7 3.8 3.7 7.5C19 16.65 12 21 12 21z" stroke="#1F3D2B" stroke-width="1.6" stroke-linejoin="round"></path></svg></div>
+      <h3>Flowers</h3>
+      <p>Where we started, and still do properly.</p>
+    </div>
+    <div>
+      <div class="diff-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="#1F3D2B" stroke-width="1.6"></circle><path d="M12 7v5l3.2 2" stroke="#1F3D2B" stroke-width="1.6" stroke-linecap="round"></path></svg></div>
+      <h3>Beauty &amp; skincare</h3>
+      <p>Serums and staples, arranged like petals.</p>
+    </div>
+    <div>
+      <div class="diff-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="8" width="16" height="12" rx="1.5" stroke="#1F3D2B" stroke-width="1.6"></rect><path d="M4 8l8-4 8 4" stroke="#1F3D2B" stroke-width="1.6" stroke-linejoin="round"></path></svg></div>
+      <h3>Snacks &amp; treats</h3>
+      <p>A tin of someone's favourites, bound and wrapped.</p>
+    </div>
+    <div>
+      <div class="diff-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M4 12h16" stroke="#1F3D2B" stroke-width="1.6" stroke-linecap="round"></path><circle cx="12" cy="12" r="9" stroke="#1F3D2B" stroke-width="1.6"></circle></svg></div>
+      <h3>Almost anything else</h3>
+      <p>Tell us what they'd love — we'll find the shape.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS BY THE BOUQUETS -->
+<section id="events">
+  <div class="events-grid">
+    <div class="events-card">
+      <div id="eventsAnimTarget" class="events-stage">
+        <div class="seq-logo">
+          <svg width="118" height="118" viewBox="0 0 120 120" aria-hidden="true">
+            <path d="M42,112 L78,112 L60,74 Z" fill="#8FA07E" stroke="#1F3D2B" stroke-width="1.6"></path>
+            <line x1="60" y1="74" x2="24.6" y2="32.9" stroke="#1F3D2B" stroke-width="2.2" stroke-linecap="round"></line>
+            <line x1="60" y1="74" x2="41.2" y2="23.3" stroke="#1F3D2B" stroke-width="2.2" stroke-linecap="round"></line>
+            <line x1="60" y1="74" x2="60" y2="20" stroke="#1F3D2B" stroke-width="2.2" stroke-linecap="round"></line>
+            <line x1="60" y1="74" x2="78.8" y2="23.3" stroke="#1F3D2B" stroke-width="2.2" stroke-linecap="round"></line>
+            <line x1="60" y1="74" x2="95.4" y2="32.9" stroke="#1F3D2B" stroke-width="2.2" stroke-linecap="round"></line>
+            <ellipse cx="24.6" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-40 24.6 32.9)"></ellipse>
+            <ellipse cx="41.2" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(-20 41.2 23.3)"></ellipse>
+            <ellipse cx="60" cy="20" rx="13" ry="5.5" fill="#C9A227" transform="rotate(0 60 20)"></ellipse>
+            <ellipse cx="78.8" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(20 78.8 23.3)"></ellipse>
+            <ellipse cx="95.4" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(40 95.4 32.9)"></ellipse>
+          </svg>
+        </div>
+        <div class="petal" style="--rot:0deg; background:#C9A227;"></div>
+        <div class="petal" style="--rot:24deg; background:#8FA07E;"></div>
+        <div class="petal" style="--rot:48deg; background:#1F3D2B;"></div>
+        <div class="petal" style="--rot:72deg; background:#C9A227;"></div>
+        <div class="petal" style="--rot:96deg; background:#8FA07E;"></div>
+        <div class="petal" style="--rot:120deg; background:#1F3D2B;"></div>
+        <div class="petal" style="--rot:144deg; background:#C9A227;"></div>
+        <div class="petal" style="--rot:168deg; background:#8FA07E;"></div>
+        <div class="petal" style="--rot:192deg; background:#1F3D2B;"></div>
+        <div class="petal" style="--rot:216deg; background:#C9A227;"></div>
+        <div class="petal" style="--rot:240deg; background:#8FA07E;"></div>
+        <div class="petal" style="--rot:264deg; background:#1F3D2B;"></div>
+        <div class="petal" style="--rot:288deg; background:#C9A227;"></div>
+        <div class="petal" style="--rot:312deg; background:#8FA07E;"></div>
+        <div class="petal" style="--rot:336deg; background:#1F3D2B;"></div>
+        <div class="seq-events">
+          <svg width="80" height="80" viewBox="0 0 120 120" aria-hidden="true">
+            <path d="M42,112 L78,112 L60,74 Z" fill="#8FA07E" stroke="#1F3D2B" stroke-width="1.6"></path>
+            <line x1="60" y1="74" x2="24.6" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+            <line x1="60" y1="74" x2="41.2" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+            <line x1="60" y1="74" x2="95.4" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+            <line x1="60" y1="74" x2="78.8" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+            <ellipse cx="24.6" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-40 24.6 32.9)"></ellipse>
+            <ellipse cx="41.2" cy="23.3" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-20 41.2 23.3)"></ellipse>
+            <circle cx="60" cy="20" r="9" fill="none" stroke="#C9A227" stroke-width="1.6"></circle>
+            <line x1="60" y1="10" x2="60" y2="30" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
+            <line x1="50" y1="20" x2="70" y2="20" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
+            <line x1="52.9" y1="12.9" x2="67.1" y2="27.1" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
+            <line x1="67.1" y1="12.9" x2="52.9" y2="27.1" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
+            <ellipse cx="78.8" cy="23.3" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(20 78.8 23.3)"></ellipse>
+            <ellipse cx="95.4" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(40 95.4 32.9)"></ellipse>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <p>Events by</p>
+        <p class="lockup-name">The Bouquets</p>
+      </div>
+    </div>
+    <div>
+      <p class="section-label">New this year</p>
+      <h2>The same eye for arrangement, now for your whole event.</h2>
+      <p>We're extending The Bouquets into styling for engagements, birthdays and small gatherings — florals, table settings and favours that all feel like they came from the same hand. It's early days; tell us what you're celebrating and we'll shape something around it.</p>
+      <a class="ghost-cta" href="#contact">Tell us what you're celebrating</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT / FOOTER -->
+<section id="contact">
+  <div class="contact-wrap">
+    <h2>Let's put something together.</h2>
+    <p>Reach out with who it's for and what they're into — we'll take it from there.</p>
+    <div class="contact-grid">
+      <div>
+        <p>Phone / WhatsApp</p>
+        <p>[YOUR PHONE NUMBER]</p>
+      </div>
+      <div>
+        <p>Email</p>
+        <p>[YOUR EMAIL]</p>
+      </div>
+      <div>
+        <p>Instagram</p>
+        <p>[YOUR INSTAGRAM HANDLE]</p>
+      </div>
+      <div>
+        <p>Based in</p>
+        <p>Lahore, Pakistan</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var target = document.getElementById('eventsAnimTarget');
+    if (!target) return;
+    var played = false;
+    function play() {
+      if (played) return;
+      played = true;
+      target.classList.add('play');
+    }
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            play();
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.5 });
+      observer.observe(target);
+    } else {
+      play();
+    }
+  })();
+</script>
+
+</body>
+</html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Bouquets</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Fredoka:wght@500;600;700&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --ivory: #F5F6EF;
@@ -17,9 +17,11 @@
     --text-soft: #5B6B5D;
     --label: #6B7A6D;
     --line: rgba(23,35,24,0.10);
+    --brand-font: 'Fredoka', 'Karla', sans-serif;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--ivory); color: var(--text); font-family: 'Karla', sans-serif; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--ivory); color: var(--text); font-family: 'Karla', sans-serif; overflow-x: hidden; }
   a { color: inherit; text-decoration: none; }
   img, svg { max-width: 100%; }
 
@@ -33,36 +35,114 @@
 
   .nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 6vw; border-bottom: 1px solid var(--line); }
   .brand { display: flex; align-items: center; gap: 10px; }
-  .brand-name { font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; font-size: 19px; color: var(--forest); }
+  .brand-name { font-family: var(--brand-font); font-weight: 600; font-size: 22px; letter-spacing: -0.01em; color: var(--forest); line-height: 1; }
+  .brand-est { display: block; font-family: 'Karla', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--label); margin-top: 4px; }
   .nav-links { display: flex; align-items: center; gap: 36px; font-size: 15px; }
-
-  .hero { display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 48px; padding: 9vh 6vw 10vh; max-width: 1320px; margin: 0 auto; }
-  .hero-eyebrow { font-size: 14px; letter-spacing: 0.02em; color: var(--label); margin: 0 0 18px; }
-  .hero h1 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(38px,5vw,64px); line-height: 1.08; margin: 0 0 26px; }
-  .hero h1 em { font-style: italic; color: var(--forest); }
-  .hero p { font-size: 18px; line-height: 1.6; color: var(--text-muted); max-width: 480px; margin: 0 0 34px; }
-  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
-  .hero-mark { justify-self: end; }
 
   section { padding: 9vh 6vw; }
   .section-label { font-size: 14px; color: var(--label); margin: 0 0 10px; }
 
+  /* ---------- scroll sequence: hero -> zoom -> fireworks -> Events ---------- */
+  .seq { position: relative; height: 600vh; }
+  .seq-anchor { position: absolute; left: 0; top: 450vh; height: 1px; width: 1px; }
+  .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+
+  .glass { position: absolute; inset: 0; opacity: 0; z-index: 0; pointer-events: none; background: #EEF1E6; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.75; }
+  .blob.b1 { width: 55vmax; height: 55vmax; left: -12vmax; top: -18vmax; background: #B9C7A8; animation: drift1 14s ease-in-out infinite alternate; }
+  .blob.b2 { width: 45vmax; height: 45vmax; right: -14vmax; top: 10vh; background: #E6CD7A; animation: drift2 17s ease-in-out infinite alternate; }
+  .blob.b3 { width: 50vmax; height: 50vmax; left: 18vw; bottom: -26vmax; background: #6F8F74; animation: drift3 19s ease-in-out infinite alternate; }
+  .blob.b4 { width: 26vmax; height: 26vmax; left: 8vw; top: 42vh; background: #F7F2DC; animation: drift2 12s ease-in-out infinite alternate-reverse; }
+  @keyframes drift1 { to { transform: translate(14vw, 12vh) scale(1.15); } }
+  @keyframes drift2 { to { transform: translate(-16vw, 18vh) scale(0.9); } }
+  @keyframes drift3 { to { transform: translate(10vw, -14vh) scale(1.1); } }
+  .frost { position: absolute; inset: 0; z-index: 2; opacity: 0; pointer-events: none;
+    background: linear-gradient(135deg, rgba(255,255,255,0.42), rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.28));
+    -webkit-backdrop-filter: blur(22px) saturate(150%); backdrop-filter: blur(22px) saturate(150%); }
+
+  .hero { position: relative; height: 100%; display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 48px; padding: 4vh 6vw 8vh; max-width: 1320px; margin: 0 auto; }
+  .hero-copy { will-change: filter, opacity, transform; }
+  .hero-eyebrow { font-size: 14px; letter-spacing: 0.02em; color: var(--label); margin: 0 0 18px; }
+  .hero h1 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(38px,5vw,64px); line-height: 1.08; margin: 0 0 26px; }
+  .hero h1 em { font-style: italic; color: var(--forest); }
+  .hero p.lede { font-size: 18px; line-height: 1.6; color: var(--text-muted); max-width: 480px; margin: 0 0 34px; }
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-mark { justify-self: end; position: relative; z-index: 3; transform-origin: 50% 50%; will-change: transform, opacity; line-height: 0; }
+  .hero-mark svg { width: 280px; height: 280px; display: block; }
+  .scroll-hint { position: absolute; left: 50%; bottom: 3vh; transform: translateX(-50%); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--label); z-index: 1; }
+
+  #fx { position: absolute; inset: 0; z-index: 4; pointer-events: none; width: 100%; height: 100%; }
+
+  .finale { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 6vh 6vw; pointer-events: none; }
+  .finale.live { pointer-events: auto; }
+  .finale-logo { width: min(22vh, 170px); height: min(22vh, 170px); opacity: 0; margin-bottom: 18px; }
+  .finale-logo svg { width: 100%; height: 100%; display: block; }
+  .lockup { opacity: 0; }
+  .lk-small { display: block; font-size: 16px; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 6px; }
+  .lk-big { display: block; font-family: var(--brand-font); font-weight: 600; font-size: clamp(44px, 9vw, 96px); line-height: 1.05; color: var(--forest); }
+  .finale-more { opacity: 0; transform: translateY(12px); margin-top: 26px; }
+  .finale-more p { font-size: 16px; line-height: 1.6; color: var(--text-muted); max-width: 460px; margin: 0 auto 22px; }
+  .finale-more .label { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--label); margin-bottom: 10px; }
+
+  /* ---------- reveal helper ---------- */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- Meet our CEO ---------- */
+  #ceo { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; justify-content: center; text-align: center; background: var(--forest); color: var(--ivory); position: relative; overflow: hidden; }
+  #ceo .monogram { width: 96px; height: 96px; border-radius: 50%; margin: 0 auto 28px; display: flex; align-items: center; justify-content: center; font-family: var(--brand-font); font-weight: 600; font-size: 34px; color: var(--forest); background: var(--gold); }
+  #ceo .section-label { color: rgba(245,246,239,0.7); font-size: 15px; letter-spacing: 0.16em; text-transform: uppercase; }
+  #ceo h2 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: clamp(56px, 11vw, 140px); line-height: 1; margin: 8px 0 22px; }
+  #ceo .sub { font-size: 17px; color: rgba(245,246,239,0.78); margin: 0; }
+  #ceo .ring { position: absolute; border: 1px solid rgba(201,162,39,0.25); border-radius: 50%; pointer-events: none; }
+
+  /* ---------- iMessage ---------- */
+  #imessage { padding: 0; min-height: 100vh; min-height: 100svh; background: #FFFFFF; display: flex; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif; }
+  .ios { width: 100%; max-width: 680px; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
+  .ios-head { display: flex; flex-direction: column; align-items: center; padding: 18px 16px 12px; border-bottom: 1px solid #E5E5EA; background: rgba(249,249,249,0.94); position: relative; }
+  .ios-back { position: absolute; left: 14px; top: 34px; color: #0A84FF; font-size: 30px; line-height: 1; font-weight: 300; }
+  .ios-avatar { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(180deg, #A5ABB6, #858A94); color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 21px; font-weight: 500; letter-spacing: 0.02em; }
+  .ios-name { font-size: 12px; color: #000000; margin-top: 6px; }
+  .ios-name span { color: #8E8E93; }
+  .ios-body { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px 14px 14px; gap: 4px; }
+  .ios-time { text-align: center; font-size: 11px; color: #8E8E93; margin-bottom: 12px; }
+  .ios-time b { font-weight: 600; }
+  .bubble { max-width: 75%; padding: 9px 14px; border-radius: 20px; font-size: 17px; line-height: 1.3; position: relative; }
+  .bubble.out { align-self: flex-end; background: #0A84FF; color: #FFFFFF; border-bottom-right-radius: 6px; }
+  .bubble.in { align-self: flex-start; background: #E9E9EB; color: #000000; border-bottom-left-radius: 6px; }
+  .ios-status { align-self: flex-end; font-size: 11px; color: #8E8E93; margin: 2px 4px 10px; min-height: 13px; }
+  .typing { align-self: flex-start; background: #E9E9EB; border-radius: 20px; border-bottom-left-radius: 6px; padding: 12px 14px; display: flex; gap: 5px; }
+  .typing i { width: 8px; height: 8px; border-radius: 50%; background: #8E8E93; animation: blink 1.2s infinite ease-in-out; }
+  .typing i:nth-child(2) { animation-delay: 0.15s; }
+  .typing i:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes blink { 0%, 60%, 100% { opacity: 0.35; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+  .pop { opacity: 0; transform: scale(0.6) translateY(10px); transform-origin: bottom left; transition: opacity 0.25s ease, transform 0.35s cubic-bezier(.2,1.4,.4,1); }
+  .bubble.out.pop { transform-origin: bottom right; }
+  .pop.show { opacity: 1; transform: none; }
+  .hidden { display: none !important; }
+  .ios-input { display: flex; align-items: center; gap: 10px; padding: 8px 12px 18px; }
+  .ios-plus { width: 34px; height: 34px; border-radius: 50%; background: #E9E9EB; color: #8E8E93; display: flex; align-items: center; justify-content: center; font-size: 22px; flex: none; }
+  .ios-field { flex: 1; border: 1px solid #D1D1D6; border-radius: 18px; padding: 8px 14px; color: #C7C7CC; font-size: 16px; }
+
+  /* ---------- CEO letter ---------- */
+  #letter { background: var(--ivory); padding: 14vh 6vw; }
+  .letter { max-width: 640px; margin: 0 auto; }
+  .letter h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(30px, 4vw, 46px); line-height: 1.15; margin: 0 0 32px; }
+  .letter h2 em { color: var(--forest); }
+  .letter p { font-size: 18px; line-height: 1.75; color: var(--text-muted); margin: 0 0 22px; }
+  .signoff { margin-top: 40px; padding-top: 26px; border-top: 1px solid var(--line); }
+  .signoff .sig { font-family: 'Fraunces', serif; font-style: italic; font-size: 34px; color: var(--forest); margin: 0; line-height: 1.1; }
+  .signoff .role { font-size: 14px; color: var(--label); margin: 6px 0 0; }
+
+  /* ---------- The idea ---------- */
   #difference { background: #FFFFFF; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   #difference h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(28px,3.2vw,38px); margin: 0 0 44px; max-width: 640px; line-height: 1.25; }
   .diff-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 28px; max-width: 1100px; margin: 0 auto; }
-  .diff-grid > div { max-width: 1100px; }
   .diff-icon { width: 34px; height: 34px; margin-bottom: 16px; }
   .diff-grid h3 { font-size: 17px; font-weight: 600; margin: 0 0 8px; }
   .diff-grid p { font-size: 15px; line-height: 1.6; color: var(--text-soft); margin: 0; }
 
-  #events { padding: 10vh 6vw; }
-  .events-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 0.85fr 1.15fr; align-items: center; gap: 56px; }
-  .events-card { background: #FFFFFF; border: 1px solid var(--line); border-radius: 6px; padding: 48px 40px; display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
-  .events-card p:first-of-type { font-size: 14px; color: var(--label); margin: 0 0 2px; }
-  .events-card p.lockup-name { font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; font-size: 27px; color: var(--forest); margin: 0; }
-  #events h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(26px,3vw,34px); margin: 0 0 20px; line-height: 1.25; }
-  #events > .events-grid > div:last-child p { font-size: 16px; line-height: 1.65; color: var(--text-muted); max-width: 480px; margin: 0 0 30px; }
-
+  /* ---------- Contact ---------- */
   #contact { background: #FFFFFF; border-top: 1px solid var(--line); padding: 9vh 6vw 6vh; }
   .contact-wrap { max-width: 1100px; margin: 0 auto; }
   #contact h2 { font-family: 'Fraunces', serif; font-weight: 500; font-style: italic; font-size: clamp(28px,3.4vw,42px); margin: 0 0 16px; max-width: 560px; line-height: 1.2; color: var(--forest); }
@@ -70,50 +150,35 @@
   .contact-grid { display: flex; flex-wrap: wrap; gap: 56px; padding-top: 36px; border-top: 1px solid var(--line); }
   .contact-grid p:first-child { font-size: 13px; color: var(--label); margin: 0 0 8px; }
   .contact-grid p:last-child { font-size: 16px; margin: 0; }
+  .footer-est { margin-top: 48px; font-size: 13px; color: var(--label); display: flex; align-items: center; gap: 10px; }
+  .footer-est .brand-name { font-size: 16px; }
 
-  /* --- scroll-triggered logo sequence --- */
-  .events-stage { position: relative; width: 220px; height: 220px; }
-  .events-stage .seq-logo,
-  .events-stage .seq-events { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-  .events-stage .seq-events { opacity: 0; transform: scale(0.55); }
-  .events-stage .petal {
-    position: absolute; left: 50%; top: 50%; width: 10px; height: 4px; margin: -2px 0 0 -5px;
-    border-radius: 6px; opacity: 0;
-  }
-  @keyframes seqLogoZoomDrop {
-    0%   { opacity: 1; transform: scale(1)    translateY(0); }
-    28%  { opacity: 1; transform: scale(1.32) translateY(-6px); }
-    46%  { opacity: 1; transform: scale(1.24) translateY(-4px); }
-    78%  { opacity: 1; transform: scale(0.85) translateY(64px); }
-    100% { opacity: 0; transform: scale(0.6)  translateY(88px); }
-  }
-  @keyframes seqPetalBurst {
-    0%   { opacity: 0; transform: rotate(var(--rot)) translateY(0)    scale(1); }
-    16%  { opacity: 1; }
-    100% { opacity: 0; transform: rotate(var(--rot)) translateY(-88px) scale(0.4); }
-  }
-  @keyframes seqMergeIn {
-    0%   { opacity: 0; transform: scale(0.55) translateY(8px); }
-    100% { opacity: 1; transform: scale(1)    translateY(0); }
-  }
-  .events-stage.play .seq-logo   { animation: seqLogoZoomDrop 1.5s cubic-bezier(.32,.1,.3,1) both; }
-  .events-stage.play .petal      { animation: seqPetalBurst 1s cubic-bezier(.16,.84,.44,1) 1.25s both; }
-  .events-stage.play .seq-events { animation: seqMergeIn 0.9s cubic-bezier(.22,.85,.32,1) 1.7s both; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .events-stage .seq-logo   { opacity: 0 !important; }
-    .events-stage .seq-events { opacity: 1 !important; transform: none !important; }
-    .events-stage .petal      { display: none !important; }
-  }
   @media (max-width: 860px) {
     .nav-links { display: none !important; }
-    .hero { grid-template-columns: 1fr !important; }
-    .hero-mark { order: -1; justify-self: center !important; margin-bottom: 24px; }
+    .hero { grid-template-columns: 1fr !important; gap: 20px; align-content: center; padding-top: 2vh; }
+    .hero-mark { order: -1; justify-self: center !important; }
+    .hero-mark svg { width: 170px; height: 170px; }
+    .hero h1 { margin-bottom: 16px; }
+    .hero p.lede { font-size: 16px; margin-bottom: 22px; }
     .diff-grid { grid-template-columns: 1fr 1fr !important; }
-    .events-grid { grid-template-columns: 1fr !important; }
   }
   @media (max-width: 560px) {
     .diff-grid { grid-template-columns: 1fr !important; }
+    .nav .cta-small { padding: 10px 14px; font-size: 13px; }
+  }
+
+  /* Reduced motion: no scroll-jacked sequence, just the content in order */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .seq { height: auto; }
+    .seq-anchor { position: static; }
+    .stage { position: relative; height: auto; overflow: visible; }
+    .hero { height: auto; padding: 9vh 6vw 10vh; }
+    .glass, .frost, #fx, .scroll-hint { display: none; }
+    .finale { position: relative; inset: auto; pointer-events: auto; padding: 10vh 6vw; }
+    .finale-logo, .lockup, .finale-more { opacity: 1 !important; transform: none !important; }
+    .reveal, .pop { opacity: 1 !important; transform: none !important; transition: none; }
+    .typing i { animation: none; }
   }
 </style>
 </head>
@@ -135,45 +200,147 @@
       <ellipse cx="78.8" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(20 78.8 23.3)"></ellipse>
       <ellipse cx="95.4" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(40 95.4 32.9)"></ellipse>
     </svg>
-    <span class="brand-name">The Bouquets</span>
+    <div>
+      <span class="brand-name">The Bouquets</span>
+      <span class="brand-est">Est. 2025</span>
+    </div>
   </div>
   <div class="nav-links">
-    <a class="nav-link" href="#difference">The idea</a>
     <a class="nav-link" href="#events">Events</a>
+    <a class="nav-link" href="#ceo">Our CEO</a>
+    <a class="nav-link" href="#difference">The idea</a>
     <a class="nav-link" href="#contact">Contact</a>
   </div>
   <a class="cta cta-small" href="#contact">Get in touch</a>
 </div>
 
-<!-- HERO -->
-<div class="hero">
-  <div>
-    <p class="hero-eyebrow">Lahore, Pakistan</p>
-    <h1>Any gift, gathered <em>like a bouquet.</em></h1>
-    <p>We started with flowers. Now we arrange anything worth giving — skincare, snacks, little everyday things — into a bouquet, wrapped and bound the same careful way.</p>
-    <div class="hero-ctas">
-      <a class="cta" href="#contact">Order a bouquet</a>
-      <a class="ghost-cta" href="#events">See Events by The Bouquets</a>
+<!-- HERO + SCROLL SEQUENCE -->
+<div class="seq" id="seq">
+  <div class="seq-anchor" id="events"></div>
+  <div class="stage" id="stage">
+    <div class="glass" id="glass" aria-hidden="true">
+      <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
     </div>
-  </div>
-  <div class="hero-mark">
-    <svg width="280" height="280" viewBox="0 0 120 120" aria-hidden="true">
-      <path d="M42,112 L78,112 L60,74 Z" fill="#8FA07E" stroke="#1F3D2B" stroke-width="1.6"></path>
-      <line x1="60" y1="74" x2="24.6" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
-      <line x1="60" y1="74" x2="41.2" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
-      <line x1="60" y1="74" x2="60" y2="20" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
-      <line x1="60" y1="74" x2="78.8" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
-      <line x1="60" y1="74" x2="95.4" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
-      <ellipse cx="24.6" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-40 24.6 32.9)"></ellipse>
-      <ellipse cx="41.2" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(-20 41.2 23.3)"></ellipse>
-      <ellipse cx="60" cy="20" rx="13" ry="5.5" fill="#C9A227" transform="rotate(0 60 20)"></ellipse>
-      <ellipse cx="78.8" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(20 78.8 23.3)"></ellipse>
-      <ellipse cx="95.4" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(40 95.4 32.9)"></ellipse>
-    </svg>
+
+    <div class="hero">
+      <div class="hero-copy" id="heroCopy">
+        <p class="hero-eyebrow">Lahore, Pakistan · Est. 2025</p>
+        <h1>Any gift, gathered <em>like a bouquet.</em></h1>
+        <p class="lede">We started with flowers. Now we arrange anything worth giving — skincare, snacks, little everyday things — into a bouquet, wrapped and bound the same careful way.</p>
+        <div class="hero-ctas">
+          <a class="cta" href="#contact">Order a bouquet</a>
+          <a class="ghost-cta" href="#events">See Events by The Bouquets</a>
+        </div>
+      </div>
+      <div class="hero-mark" id="heroMark">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <g id="heroBody">
+            <path d="M42,112 L78,112 L60,74 Z" fill="#8FA07E" stroke="#1F3D2B" stroke-width="1.6"></path>
+            <line x1="60" y1="74" x2="24.6" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+            <line x1="60" y1="74" x2="41.2" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+            <line x1="60" y1="74" x2="60" y2="20" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+            <line x1="60" y1="74" x2="78.8" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+            <line x1="60" y1="74" x2="95.4" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+          </g>
+          <g id="heroHeads">
+            <ellipse cx="24.6" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-40 24.6 32.9)"></ellipse>
+            <ellipse cx="41.2" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(-20 41.2 23.3)"></ellipse>
+            <ellipse cx="60" cy="20" rx="13" ry="5.5" fill="#C9A227" transform="rotate(0 60 20)"></ellipse>
+            <ellipse cx="78.8" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(20 78.8 23.3)"></ellipse>
+            <ellipse cx="95.4" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(40 95.4 32.9)"></ellipse>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="scroll-hint" id="scrollHint">Scroll</div>
+
+    <div class="frost" id="frost" aria-hidden="true"></div>
+    <canvas id="fx" aria-hidden="true"></canvas>
+
+    <div class="finale" id="finale">
+      <div class="finale-logo" id="finaleLogo">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <path d="M42,112 L78,112 L60,74 Z" fill="#8FA07E" stroke="#1F3D2B" stroke-width="1.6"></path>
+          <line x1="60" y1="74" x2="24.6" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="60" y1="74" x2="41.2" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="60" y1="74" x2="60" y2="20" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="60" y1="74" x2="95.4" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="60" y1="74" x2="78.8" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+          <ellipse cx="24.6" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-40 24.6 32.9)"></ellipse>
+          <ellipse cx="41.2" cy="23.3" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-20 41.2 23.3)"></ellipse>
+          <circle cx="60" cy="20" r="9" fill="none" stroke="#C9A227" stroke-width="1.6"></circle>
+          <line x1="60" y1="10" x2="60" y2="30" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="50" y1="20" x2="70" y2="20" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="52.9" y1="12.9" x2="67.1" y2="27.1" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
+          <line x1="67.1" y1="12.9" x2="52.9" y2="27.1" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
+          <ellipse cx="78.8" cy="23.3" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(20 78.8 23.3)"></ellipse>
+          <ellipse cx="95.4" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(40 95.4 32.9)"></ellipse>
+        </svg>
+      </div>
+      <div class="lockup" id="lockup">
+        <span class="lk-small" id="lkSmall">Events by</span>
+        <span class="lk-big" id="lkBig">The Bouquets</span>
+      </div>
+      <div class="finale-more" id="finaleMore">
+        <div class="label">New this year</div>
+        <p>The same eye for arrangement, now for your whole event — florals, table settings and favours for engagements, birthdays and small gatherings.</p>
+        <a class="ghost-cta" href="#contact">Tell us what you're celebrating</a>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- THE DIFFERENCE -->
+<!-- MEET OUR CEO -->
+<section id="ceo">
+  <div class="ring" style="width:70vmax;height:70vmax;left:50%;top:50%;margin:-35vmax 0 0 -35vmax;"></div>
+  <div class="ring" style="width:100vmax;height:100vmax;left:50%;top:50%;margin:-50vmax 0 0 -50vmax;"></div>
+  <div class="reveal">
+    <div class="monogram">ED</div>
+    <p class="section-label">Meet our CEO</p>
+    <h2>Eeman Dar</h2>
+    <p class="sub">The one behind every bouquet.</p>
+  </div>
+</section>
+
+<!-- iMESSAGE -->
+<section id="imessage" aria-label="A message from Eeman">
+  <div class="ios">
+    <div class="ios-head">
+      <span class="ios-back" aria-hidden="true">‹</span>
+      <div class="ios-avatar">ED</div>
+      <div class="ios-name">Eeman Dar <span>›</span></div>
+    </div>
+    <div class="ios-body" id="chat">
+      <div class="ios-time"><b>Today</b> 9:41 PM</div>
+      <div class="bubble out pop" id="msgOut">Eeman, everyone wants to meet you 💐</div>
+      <div class="ios-status" id="msgStatus"></div>
+      <div class="typing pop hidden" id="typing" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="bubble in pop" id="msgIn">no I don't wanna meet actually</div>
+    </div>
+    <div class="ios-input" aria-hidden="true">
+      <div class="ios-plus">+</div>
+      <div class="ios-field">iMessage</div>
+    </div>
+  </div>
+</section>
+
+<!-- LETTER FROM THE CEO -->
+<section id="letter">
+  <div class="letter reveal">
+    <p class="section-label">A note from our CEO</p>
+    <h2>Okay, fine. <em>Hi, I'm Eeman.</em></h2>
+    <p>The Bouquets started with flowers, and I still love them. But somewhere along the way I realised a bouquet was never really about the flowers — it's about the second someone opens the door and sees it.</p>
+    <p>So I redesigned The Bouquets around that second. New wrapping, new shapes, and one simple rule: if the person you love would light up over it — their favourite serum, the snacks they hide from everyone, the little things that are so them — we can gather it into a bouquet.</p>
+    <p>And honestly? My favourite part is still the delivery. Every bouquet leaves us the way I'd want to receive one: carefully arranged and properly wrapped. Your reactions, and the messages you send us afterwards, are the best part of my job.</p>
+    <p>Thank you for letting us be part of your moments. Keep them coming — I'll keep delivering.</p>
+    <div class="signoff">
+      <p class="sig">Eeman Dar</p>
+      <p class="role">CEO, The Bouquets</p>
+    </div>
+  </div>
+</section>
+
+<!-- THE IDEA -->
 <section id="difference">
   <p class="section-label">The idea</p>
   <h2>A bouquet was never really about the flowers. It's about how the giving looks.</h2>
@@ -201,74 +368,6 @@
   </div>
 </section>
 
-<!-- EVENTS BY THE BOUQUETS -->
-<section id="events">
-  <div class="events-grid">
-    <div class="events-card">
-      <div id="eventsAnimTarget" class="events-stage">
-        <div class="seq-logo">
-          <svg width="118" height="118" viewBox="0 0 120 120" aria-hidden="true">
-            <path d="M42,112 L78,112 L60,74 Z" fill="#8FA07E" stroke="#1F3D2B" stroke-width="1.6"></path>
-            <line x1="60" y1="74" x2="24.6" y2="32.9" stroke="#1F3D2B" stroke-width="2.2" stroke-linecap="round"></line>
-            <line x1="60" y1="74" x2="41.2" y2="23.3" stroke="#1F3D2B" stroke-width="2.2" stroke-linecap="round"></line>
-            <line x1="60" y1="74" x2="60" y2="20" stroke="#1F3D2B" stroke-width="2.2" stroke-linecap="round"></line>
-            <line x1="60" y1="74" x2="78.8" y2="23.3" stroke="#1F3D2B" stroke-width="2.2" stroke-linecap="round"></line>
-            <line x1="60" y1="74" x2="95.4" y2="32.9" stroke="#1F3D2B" stroke-width="2.2" stroke-linecap="round"></line>
-            <ellipse cx="24.6" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-40 24.6 32.9)"></ellipse>
-            <ellipse cx="41.2" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(-20 41.2 23.3)"></ellipse>
-            <ellipse cx="60" cy="20" rx="13" ry="5.5" fill="#C9A227" transform="rotate(0 60 20)"></ellipse>
-            <ellipse cx="78.8" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(20 78.8 23.3)"></ellipse>
-            <ellipse cx="95.4" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(40 95.4 32.9)"></ellipse>
-          </svg>
-        </div>
-        <div class="petal" style="--rot:0deg; background:#C9A227;"></div>
-        <div class="petal" style="--rot:24deg; background:#8FA07E;"></div>
-        <div class="petal" style="--rot:48deg; background:#1F3D2B;"></div>
-        <div class="petal" style="--rot:72deg; background:#C9A227;"></div>
-        <div class="petal" style="--rot:96deg; background:#8FA07E;"></div>
-        <div class="petal" style="--rot:120deg; background:#1F3D2B;"></div>
-        <div class="petal" style="--rot:144deg; background:#C9A227;"></div>
-        <div class="petal" style="--rot:168deg; background:#8FA07E;"></div>
-        <div class="petal" style="--rot:192deg; background:#1F3D2B;"></div>
-        <div class="petal" style="--rot:216deg; background:#C9A227;"></div>
-        <div class="petal" style="--rot:240deg; background:#8FA07E;"></div>
-        <div class="petal" style="--rot:264deg; background:#1F3D2B;"></div>
-        <div class="petal" style="--rot:288deg; background:#C9A227;"></div>
-        <div class="petal" style="--rot:312deg; background:#8FA07E;"></div>
-        <div class="petal" style="--rot:336deg; background:#1F3D2B;"></div>
-        <div class="seq-events">
-          <svg width="80" height="80" viewBox="0 0 120 120" aria-hidden="true">
-            <path d="M42,112 L78,112 L60,74 Z" fill="#8FA07E" stroke="#1F3D2B" stroke-width="1.6"></path>
-            <line x1="60" y1="74" x2="24.6" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
-            <line x1="60" y1="74" x2="41.2" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
-            <line x1="60" y1="74" x2="95.4" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
-            <line x1="60" y1="74" x2="78.8" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
-            <ellipse cx="24.6" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-40 24.6 32.9)"></ellipse>
-            <ellipse cx="41.2" cy="23.3" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-20 41.2 23.3)"></ellipse>
-            <circle cx="60" cy="20" r="9" fill="none" stroke="#C9A227" stroke-width="1.6"></circle>
-            <line x1="60" y1="10" x2="60" y2="30" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
-            <line x1="50" y1="20" x2="70" y2="20" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
-            <line x1="52.9" y1="12.9" x2="67.1" y2="27.1" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
-            <line x1="67.1" y1="12.9" x2="52.9" y2="27.1" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
-            <ellipse cx="78.8" cy="23.3" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(20 78.8 23.3)"></ellipse>
-            <ellipse cx="95.4" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(40 95.4 32.9)"></ellipse>
-          </svg>
-        </div>
-      </div>
-      <div>
-        <p>Events by</p>
-        <p class="lockup-name">The Bouquets</p>
-      </div>
-    </div>
-    <div>
-      <p class="section-label">New this year</p>
-      <h2>The same eye for arrangement, now for your whole event.</h2>
-      <p>We're extending The Bouquets into styling for engagements, birthdays and small gatherings — florals, table settings and favours that all feel like they came from the same hand. It's early days; tell us what you're celebrating and we'll shape something around it.</p>
-      <a class="ghost-cta" href="#contact">Tell us what you're celebrating</a>
-    </div>
-  </div>
-</section>
-
 <!-- CONTACT / FOOTER -->
 <section id="contact">
   <div class="contact-wrap">
@@ -292,33 +391,231 @@
         <p>Lahore, Pakistan</p>
       </div>
     </div>
+    <div class="footer-est"><span class="brand-name">The Bouquets</span> · Est. 2025</div>
   </div>
 </section>
 
 <script>
+(function () {
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- helpers ---------- */
+  function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+  function seg(p, a, b) { return clamp((p - a) / (b - a), 0, 1); }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function easeInOut(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+  function easeIn(t) { return t * t * t; }
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+  /* ---------- reveals ---------- */
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduced) {
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+    }, { threshold: 0.25 });
+    reveals.forEach(function (el) { ro.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ---------- iMessage ---------- */
   (function () {
-    var target = document.getElementById('eventsAnimTarget');
-    if (!target) return;
-    var played = false;
-    function play() {
-      if (played) return;
-      played = true;
-      target.classList.add('play');
-    }
-    if ('IntersectionObserver' in window) {
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            play();
-            observer.disconnect();
-          }
-        });
-      }, { threshold: 0.5 });
-      observer.observe(target);
-    } else {
-      play();
-    }
+    var out = document.getElementById('msgOut'), status = document.getElementById('msgStatus');
+    var typing = document.getElementById('typing'), inc = document.getElementById('msgIn');
+    function finalState() { out.classList.add('show'); status.textContent = 'Read 9:41 PM'; inc.classList.add('show'); }
+    if (reduced || !('IntersectionObserver' in window)) { finalState(); return; }
+    var io = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      io.disconnect();
+      out.classList.add('show');
+      setTimeout(function () { status.textContent = 'Delivered'; }, 500);
+      setTimeout(function () { status.textContent = 'Read 9:41 PM'; typing.classList.remove('hidden'); requestAnimationFrame(function () { typing.classList.add('show'); }); }, 1300);
+      setTimeout(function () { typing.classList.add('hidden'); inc.classList.add('show'); }, 3400);
+    }, { threshold: 0.6 });
+    io.observe(document.getElementById('chat'));
   })();
+
+  if (reduced) return;
+
+  /* ---------- scroll sequence ---------- */
+  var seq = document.getElementById('seq'), stage = document.getElementById('stage');
+  var glass = document.getElementById('glass'), frost = document.getElementById('frost');
+  var heroCopy = document.getElementById('heroCopy'), heroMark = document.getElementById('heroMark');
+  var heroHeads = document.getElementById('heroHeads'), hint = document.getElementById('scrollHint');
+  var finale = document.getElementById('finale'), finaleLogo = document.getElementById('finaleLogo');
+  var lockup = document.getElementById('lockup'), more = document.getElementById('finaleMore');
+  var canvas = document.getElementById('fx'), ctx = canvas.getContext('2d');
+
+  // Flower heads in the logo's 120x120 viewBox: x, y, rotation, colour
+  var HEADS = [
+    [24.6, 32.9, -40, '#8FA07E'], [41.2, 23.3, -20, '#1F3D2B'], [60, 20, 0, '#C9A227'],
+    [78.8, 23.3, 20, '#1F3D2B'], [95.4, 32.9, 40, '#8FA07E']
+  ];
+
+  var W = 0, H = 0, dpr = 1, geo = null, parts = [], lastP = -1, ticking = false;
+
+  function rectIn(el) {
+    var s = stage.getBoundingClientRect(), r = el.getBoundingClientRect();
+    return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height, cx: r.left - s.left + r.width / 2, cy: r.top - s.top + r.height / 2 };
+  }
+
+  function sampleText() {
+    // Draw the lockup text onto an offscreen canvas in the same place as the real text, then sample its pixels.
+    var off = document.createElement('canvas'); off.width = Math.ceil(W); off.height = Math.ceil(H);
+    var o = off.getContext('2d');
+    o.fillStyle = '#000'; o.textAlign = 'center'; o.textBaseline = 'middle';
+    ['lkSmall', 'lkBig'].forEach(function (id) {
+      var el = document.getElementById(id), cs = getComputedStyle(el), r = rectIn(el);
+      o.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+      o.fillText(el.textContent, r.cx, r.cy + parseFloat(cs.fontSize) * 0.04);
+    });
+    var data = o.getImageData(0, 0, off.width, off.height).data, pts = [];
+    var step = Math.max(3, Math.round(Math.min(W, H) / 170));
+    for (var tries = 0; tries < 4; tries++) {
+      pts = [];
+      for (var y = 0; y < off.height; y += step) for (var x = 0; x < off.width; x += step) {
+        if (data[(y * off.width + x) * 4 + 3] > 140) pts.push([x, y]);
+      }
+      if (pts.length <= 1600) break;
+      step++;
+    }
+    return { pts: pts, step: step };
+  }
+
+  function layout() {
+    W = stage.clientWidth; H = stage.clientHeight;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+
+    heroMark.style.transform = 'none';
+    var m = rectIn(heroMark), f = rectIn(finaleLogo);
+    var zoomSize = Math.min(H * 0.68, W * 0.92);
+    geo = {
+      c0: [m.cx, m.cy], s0: m.w,
+      cz: [W / 2, H / 2], sz: zoomSize,
+      cf: [f.cx, f.cy], sf: f.w
+    };
+
+    var t = sampleText(), rand = rng(20250101), targets = t.pts;
+    for (var i = targets.length - 1; i > 0; i--) { var j = Math.floor(rand() * (i + 1)); var tmp = targets[i]; targets[i] = targets[j]; targets[j] = tmp; }
+    parts = targets.map(function (tg, i) {
+      var h = i % HEADS.length, r = Math.sqrt(rand()), th = rand() * Math.PI * 2;
+      var ang = rand() * Math.PI * 2;
+      return {
+        h: h,
+        ex: Math.cos(th) * r * 13, ey: Math.sin(th) * r * 5.5,   // spot inside the petal ellipse (viewBox units)
+        dir: [Math.cos(ang), Math.sin(ang)],
+        R: (0.12 + 0.30 * Math.pow(rand(), 0.7)) * Math.min(W, H),
+        delay: rand() * 0.35,
+        tw: rand() * 6.28,
+        tx: tg[0], ty: tg[1]
+      };
+    });
+    geo.dot = Math.max(1.3, t.step * 0.42);
+    lastP = -1; render();
+  }
+
+  // Logo centre & size at progress p
+  function logoAt(p) {
+    var a = easeInOut(seg(p, 0.0, 0.22)), b = easeInOut(seg(p, 0.40, 0.64));
+    var cx = lerp(lerp(geo.c0[0], geo.cz[0], a), geo.cf[0], b);
+    var cy = lerp(lerp(geo.c0[1], geo.cz[1], a), geo.cf[1], b);
+    var s = lerp(lerp(geo.s0, geo.sz, a), geo.sf, b);
+    return { cx: cx, cy: cy, s: s };
+  }
+  function toScreen(L, x, y) { return [L.cx + (x - 60) / 120 * L.s, L.cy + (y - 60) / 120 * L.s]; }
+
+  function progress() {
+    var r = seq.getBoundingClientRect(), range = r.height - window.innerHeight;
+    return range > 0 ? clamp(-r.top / range, 0, 1) : 0;
+  }
+
+  function render() {
+    ticking = false;
+    if (!geo) return;
+    var p = progress();
+    if (Math.abs(p - lastP) < 0.0002) return;
+    lastP = p;
+
+    // Hero copy blurs away, glass background comes in
+    var fade = seg(p, 0.0, 0.14);
+    heroCopy.style.opacity = 1 - fade;
+    heroCopy.style.filter = 'blur(' + (fade * 14).toFixed(2) + 'px)';
+    heroCopy.style.transform = 'translateY(' + (-fade * 30).toFixed(1) + 'px) scale(' + (1 - fade * 0.04).toFixed(3) + ')';
+    hint.style.opacity = 1 - seg(p, 0, 0.04);
+    var g = seg(p, 0.02, 0.2);
+    glass.style.opacity = g; frost.style.opacity = g;
+
+    // Logo zoom -> hold -> shrink into place above the lockup
+    var L = logoAt(p);
+    heroMark.style.transform = 'translate(' + (L.cx - geo.c0[0]).toFixed(2) + 'px,' + (L.cy - geo.c0[1]).toFixed(2) + 'px) scale(' + (L.s / geo.s0).toFixed(4) + ')';
+    heroHeads.style.opacity = p < 0.22 ? 1 : 0;
+    var swap = seg(p, 0.60, 0.68);
+    heroMark.style.opacity = 1 - swap;
+    finaleLogo.style.opacity = swap;
+
+    // Lockup + details
+    var textIn = seg(p, 0.70, 0.77);
+    lockup.style.opacity = textIn;
+    var m = seg(p, 0.78, 0.86);
+    more.style.opacity = m; more.style.transform = 'translateY(' + ((1 - m) * 12).toFixed(1) + 'px)';
+    finale.classList.toggle('live', m > 0.5);
+
+    // Fireworks
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    if (p < 0.22 || textIn >= 1) return;
+    ctx.globalAlpha = 1 - textIn;
+
+    var launch = easeIn(seg(p, 0.22, 0.30));
+    var burst = easeOut(seg(p, 0.30, 0.47));
+    var gather = seg(p, 0.46, 0.70);
+    // Launch path uses the logo as it is at the moment of launch (zoomed, centred)
+    var LZ = logoAt(0.22), base = toScreen(LZ, 60, 74);
+    var heads = HEADS.map(function (hd) {
+      var hp = toScreen(LZ, hd[0], hd[1]);
+      var dx = hp[0] - base[0], dy = hp[1] - base[1], len = Math.hypot(dx, dy) || 1;
+      var dist = LZ.s * 0.28 * launch;
+      var rad = hd[2] * Math.PI / 180;
+      return { x: hp[0] + dx / len * dist, y: hp[1] + dy / len * dist - LZ.s * 0.04 * launch, cos: Math.cos(rad), sin: Math.sin(rad) };
+    });
+    var k = LZ.s / 120, dot = geo.dot;
+
+    for (var i = 0; i < parts.length; i++) {
+      var q = parts[i], hd = heads[q.h], col = HEADS[q.h][3];
+      // petal-shaped cluster that tightens as it flies
+      var tight = 1 - 0.55 * launch;
+      var lx = (q.ex * hd.cos - q.ey * hd.sin) * k * tight, ly = (q.ex * hd.sin + q.ey * hd.cos) * k * tight;
+      var x = hd.x + lx, y = hd.y + ly;
+      // burst outwards with a little gravity
+      x += q.dir[0] * q.R * burst;
+      y += q.dir[1] * q.R * burst + q.R * 0.35 * burst * burst;
+      // gather into the lettering
+      var v = easeInOut(clamp((gather - q.delay * 0.6) / 0.6, 0, 1));
+      x = lerp(x, q.tx, v); y = lerp(y, q.ty, v);
+
+      var a = 1;
+      if (burst > 0 && v < 1) a = 0.55 + 0.45 * Math.abs(Math.sin(q.tw + p * 90));
+      var r = burst === 0 ? dot * 1.6 : dot * (v < 0.5 ? 1.15 : 1);
+      ctx.globalAlpha = a * (1 - textIn);
+      ctx.fillStyle = v > 0.85 ? '#1F3D2B' : col;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(render); } }
+  var resizeTimer;
+  function onResize() { clearTimeout(resizeTimer); resizeTimer = setTimeout(layout, 150); }
+
+  var fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+  Promise.all([fontsReady, document.fonts ? document.fonts.load('600 40px Fredoka') : null]).catch(function () {}).then(function () {
+    layout();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+  });
+})();
 </script>
 
 </body>

@@ -365,6 +365,15 @@
 (function () {
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Always open at the top: don't let a reload or an old #events link drop the visitor mid-page.
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (location.hash === '#events') {
+    history.replaceState(null, '', location.pathname + location.search);
+    var toTop = function () { window.scrollTo({ top: 0, behavior: 'instant' }); };
+    toTop();
+    window.addEventListener('load', toTop);
+  }
+
   /* ---------- helpers ---------- */
   function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
   function seg(p, a, b) { return clamp((p - a) / (b - a), 0, 1); }
@@ -595,16 +604,26 @@
   Promise.all([fontsReady, document.fonts ? document.fonts.load('600 40px Fredoka') : null]).catch(function () {}).then(function () {
     layout();
     window.addEventListener('resize', onResize);
-    // Already scrolled past it (e.g. after a reload)? Just show the finished frame.
-    if (stage.getBoundingClientRect().bottom <= 0) finish();
-    if (!('IntersectionObserver' in window)) { finish(); return; }
-    var io = new IntersectionObserver(function (entries) {
-      var e = entries[0];
-      if (!e.isIntersecting || state !== 'idle') return;
-      if (e.boundingClientRect.top > -10) play();   // arriving from above: play it
-      else finish();                                 // arriving from below: never play backwards
-    }, { threshold: [0.3] });
-    io.observe(stage);
+
+    // Only a real scroll down by the visitor starts it: never on page load, a reload or a restored position.
+    var lastInput = 0, lastY = window.pageYOffset;
+    function noteInput() { lastInput = Date.now(); }
+    ['wheel', 'touchstart', 'touchmove', 'keydown', 'mousedown', 'click'].forEach(function (t) {
+      window.addEventListener(t, noteInput, { passive: true });
+    });
+    function check() {
+      var y = window.pageYOffset, down = y > lastY;
+      lastY = y;
+      if (state !== 'idle') return;
+      var r = stage.getBoundingClientRect(), vh = window.innerHeight;
+      if (r.bottom <= 0) { finish(); return; }                       // already past it: show the finished frame
+      var inView = r.top < vh * 0.7 && r.bottom > vh * 0.3;
+      if (!inView) return;
+      if (r.top < -10) { finish(); return; }                          // arriving from below: never play backwards
+      if (down && Date.now() - lastInput < 1500) play();              // visitor scrolled down into it
+    }
+    window.addEventListener('scroll', check, { passive: true });
+    check();
   });
 })();
 </script>

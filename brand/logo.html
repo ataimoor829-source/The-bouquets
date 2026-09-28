@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Bouquets logo</title>
+<style>
+  @font-face { font-family: 'Fredoka'; font-weight: 600; src: url(fredoka-latin-600-normal.woff2) format('woff2'); }
+  @font-face { font-family: 'Karla'; font-weight: 600; src: url(karla-latin-600-normal.woff2) format('woff2'); }
+  body { margin: 0; }
+  .tile { width: 1080px; height: 1080px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .ivory { background: #F5F6EF; --ink: #1F3D2B; --soft: #6B7A6D; --cone: #8FA07E; --h1: #8FA07E; --h2: #1F3D2B; --h3: #C9A227; }
+  .forest { background: #1F3D2B; --ink: #F5F6EF; --soft: rgba(245,246,239,0.7); --cone: #8FA07E; --h1: #8FA07E; --h2: #F5F6EF; --h3: #C9A227; }
+  .icon { width: 430px; height: 430px; display: block; }
+  .name { font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 132px; line-height: 1; color: var(--ink); letter-spacing: -0.01em; margin-top: 18px; }
+  .est { font-family: 'Karla', sans-serif; font-weight: 600; font-size: 26px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--soft); margin-top: 26px; padding-left: 0.32em; }
+  /* profile-photo version: Instagram crops to a circle and shows it small, so bigger icon, no small text */
+  .profile .icon { width: 520px; height: 520px; }
+  .profile .name { font-size: 112px; margin-top: 6px; }
+</style>
+</head>
+<body>
+<template id="mark">
+  <svg class="icon" viewBox="0 0 120 120">
+    <path d="M42,112 L78,112 L60,74 Z" fill="var(--cone)" stroke="var(--ink)" stroke-width="1.6"></path>
+    <g stroke="var(--ink)" stroke-width="2" stroke-linecap="round">
+      <line x1="60" y1="74" x2="24.6" y2="32.9"></line>
+      <line x1="60" y1="74" x2="41.2" y2="23.3"></line>
+      <line x1="60" y1="74" x2="60" y2="20"></line>
+      <line x1="60" y1="74" x2="78.8" y2="23.3"></line>
+      <line x1="60" y1="74" x2="95.4" y2="32.9"></line>
+    </g>
+    <ellipse cx="24.6" cy="32.9" rx="13" ry="5.5" fill="var(--h1)" transform="rotate(-40 24.6 32.9)"></ellipse>
+    <ellipse cx="41.2" cy="23.3" rx="13" ry="5.5" fill="var(--h2)" transform="rotate(-20 41.2 23.3)"></ellipse>
+    <ellipse cx="60" cy="20" rx="13" ry="5.5" fill="var(--h3)"></ellipse>
+    <ellipse cx="78.8" cy="23.3" rx="13" ry="5.5" fill="var(--h2)" transform="rotate(20 78.8 23.3)"></ellipse>
+    <ellipse cx="95.4" cy="32.9" rx="13" ry="5.5" fill="var(--h1)" transform="rotate(40 95.4 32.9)"></ellipse>
+  </svg>
+</template>
+
+<div class="tile ivory" id="post-ivory"><div data-mark></div><div class="name">The Bouquets</div><div class="est">Est. 2025 · Lahore</div></div>
+<div class="tile forest" id="post-forest"><div data-mark></div><div class="name">The Bouquets</div><div class="est">Est. 2025 · Lahore</div></div>
+<div class="tile ivory profile" id="profile-ivory"><div data-mark></div><div class="name">The Bouquets</div></div>
+<div class="tile forest profile" id="profile-forest"><div data-mark></div><div class="name">The Bouquets</div></div>
+
+<script>
+  var t = document.getElementById('mark');
+  document.querySelectorAll('[data-mark]').forEach(function (el) { el.replaceWith(t.content.cloneNode(true)); });
+</script>
+</body>
+</html>

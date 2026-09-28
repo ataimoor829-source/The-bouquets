@@ -42,10 +42,18 @@
   section { padding: 9vh 6vw; }
   .section-label { font-size: 14px; color: var(--label); margin: 0 0 10px; }
 
-  /* ---------- scroll sequence: hero -> zoom -> fireworks -> Events ---------- */
-  .seq { position: relative; height: 600vh; }
-  .seq-anchor { position: absolute; left: 0; top: 450vh; height: 1px; width: 1px; }
-  .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+  /* ---------- hero ---------- */
+  .hero { display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 48px; padding: 9vh 6vw 10vh; max-width: 1320px; margin: 0 auto; }
+  .hero-eyebrow { font-size: 14px; letter-spacing: 0.02em; color: var(--label); margin: 0 0 18px; }
+  .hero h1 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(38px,5vw,64px); line-height: 1.08; margin: 0 0 26px; }
+  .hero h1 em { font-style: italic; color: var(--forest); }
+  .hero p.lede { font-size: 18px; line-height: 1.6; color: var(--text-muted); max-width: 480px; margin: 0 0 34px; }
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-logo { justify-self: end; line-height: 0; }
+  .hero-logo svg { width: 280px; height: 280px; display: block; }
+
+  /* ---------- Events: logo firework sequence, plays once in one go ---------- */
+  #events { position: relative; padding: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--ivory); }
 
   .glass { position: absolute; inset: 0; opacity: 0; z-index: 0; pointer-events: none; background: #EEF1E6; }
   .blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.75; }
@@ -56,20 +64,12 @@
   @keyframes drift1 { to { transform: translate(14vw, 12vh) scale(1.15); } }
   @keyframes drift2 { to { transform: translate(-16vw, 18vh) scale(0.9); } }
   @keyframes drift3 { to { transform: translate(10vw, -14vh) scale(1.1); } }
-  .frost { position: absolute; inset: 0; z-index: 2; opacity: 0; pointer-events: none;
+  .frost { position: absolute; inset: 0; z-index: 1; opacity: 0; pointer-events: none;
     background: linear-gradient(135deg, rgba(255,255,255,0.42), rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.28));
     -webkit-backdrop-filter: blur(22px) saturate(150%); backdrop-filter: blur(22px) saturate(150%); }
-
-  .hero { position: relative; height: 100%; display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 48px; padding: 4vh 6vw 8vh; max-width: 1320px; margin: 0 auto; }
-  .hero-copy { will-change: filter, opacity, transform; }
-  .hero-eyebrow { font-size: 14px; letter-spacing: 0.02em; color: var(--label); margin: 0 0 18px; }
-  .hero h1 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(38px,5vw,64px); line-height: 1.08; margin: 0 0 26px; }
-  .hero h1 em { font-style: italic; color: var(--forest); }
-  .hero p.lede { font-size: 18px; line-height: 1.6; color: var(--text-muted); max-width: 480px; margin: 0 0 34px; }
-  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
-  .hero-mark { justify-self: end; position: relative; z-index: 3; transform-origin: 50% 50%; will-change: transform, opacity; line-height: 0; }
-  .hero-mark svg { width: 280px; height: 280px; display: block; }
-  .scroll-hint { position: absolute; left: 50%; bottom: 3vh; transform: translateX(-50%); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--label); z-index: 1; }
+  .mark-wrap { position: absolute; inset: 0; z-index: 3; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+  .seq-mark { width: min(34vh, 240px); height: min(34vh, 240px); transform-origin: 50% 50%; will-change: transform, opacity; line-height: 0; }
+  .seq-mark svg { width: 100%; height: 100%; display: block; }
 
   #fx { position: absolute; inset: 0; z-index: 4; pointer-events: none; width: 100%; height: 100%; }
 
@@ -155,11 +155,9 @@
 
   @media (max-width: 860px) {
     .nav-links { display: none !important; }
-    .hero { grid-template-columns: 1fr !important; gap: 20px; align-content: center; padding-top: 2vh; }
-    .hero-mark { order: -1; justify-self: center !important; }
-    .hero-mark svg { width: 170px; height: 170px; }
-    .hero h1 { margin-bottom: 16px; }
-    .hero p.lede { font-size: 16px; margin-bottom: 22px; }
+    .hero { grid-template-columns: 1fr !important; gap: 24px; padding-top: 5vh; }
+    .hero-logo { order: -1; justify-self: center !important; }
+    .hero-logo svg { width: 190px; height: 190px; }
     .diff-grid { grid-template-columns: 1fr 1fr !important; }
   }
   @media (max-width: 560px) {
@@ -167,15 +165,12 @@
     .nav .cta-small { padding: 10px 14px; font-size: 13px; }
   }
 
-  /* Reduced motion: no scroll-jacked sequence, just the content in order */
+  /* Reduced motion: no firework sequence, just the finished Events frame */
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .seq { height: auto; }
-    .seq-anchor { position: static; }
-    .stage { position: relative; height: auto; overflow: visible; }
-    .hero { height: auto; padding: 9vh 6vw 10vh; }
-    .glass, .frost, #fx, .scroll-hint { display: none; }
-    .finale { position: relative; inset: auto; pointer-events: auto; padding: 10vh 6vw; }
+    #events { height: auto; }
+    .glass, .frost, #fx, .mark-wrap { display: none; }
+    .finale { position: relative; inset: auto; pointer-events: auto; padding: 12vh 6vw; }
     .finale-logo, .lockup, .finale-more { opacity: 1 !important; transform: none !important; }
     .reveal, .pop { opacity: 1 !important; transform: none !important; transition: none; }
     .typing i { animation: none; }
@@ -206,35 +201,81 @@
     </div>
   </div>
   <div class="nav-links">
+    <a class="nav-link" href="#difference">The idea</a>
     <a class="nav-link" href="#events">Events</a>
     <a class="nav-link" href="#ceo">Our CEO</a>
-    <a class="nav-link" href="#difference">The idea</a>
     <a class="nav-link" href="#contact">Contact</a>
   </div>
   <a class="cta cta-small" href="#contact">Get in touch</a>
 </div>
 
-<!-- HERO + SCROLL SEQUENCE -->
-<div class="seq" id="seq">
-  <div class="seq-anchor" id="events"></div>
-  <div class="stage" id="stage">
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <p class="hero-eyebrow">Lahore, Pakistan · Est. 2025</p>
+    <h1>Any gift, gathered <em>like a bouquet.</em></h1>
+    <p class="lede">We started with flowers. Now we arrange anything worth giving — skincare, snacks, little everyday things — into a bouquet, wrapped and bound the same careful way.</p>
+    <div class="hero-ctas">
+      <a class="cta" href="#contact">Order a bouquet</a>
+      <a class="ghost-cta" href="#events">See Events by The Bouquets</a>
+    </div>
+  </div>
+  <div class="hero-logo">
+    <svg viewBox="0 0 120 120" aria-hidden="true">
+      <path d="M42,112 L78,112 L60,74 Z" fill="#8FA07E" stroke="#1F3D2B" stroke-width="1.6"></path>
+      <line x1="60" y1="74" x2="24.6" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+      <line x1="60" y1="74" x2="41.2" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+      <line x1="60" y1="74" x2="60" y2="20" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+      <line x1="60" y1="74" x2="78.8" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+      <line x1="60" y1="74" x2="95.4" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
+      <ellipse cx="24.6" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-40 24.6 32.9)"></ellipse>
+      <ellipse cx="41.2" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(-20 41.2 23.3)"></ellipse>
+      <ellipse cx="60" cy="20" rx="13" ry="5.5" fill="#C9A227" transform="rotate(0 60 20)"></ellipse>
+      <ellipse cx="78.8" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(20 78.8 23.3)"></ellipse>
+      <ellipse cx="95.4" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(40 95.4 32.9)"></ellipse>
+    </svg>
+  </div>
+</div>
+
+<!-- THE IDEA -->
+<section id="difference">
+  <p class="section-label">The idea</p>
+  <h2>A bouquet was never really about the flowers. It's about how the giving looks.</h2>
+  <div class="diff-grid">
+    <div>
+      <div class="diff-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-4.35-9.5-8.5C.5 8.8 2.6 5 6.2 5c2 0 3.4 1.1 4 2.3.6-1.2 2-2.3 4-2.3 3.6 0 5.7 3.8 3.7 7.5C19 16.65 12 21 12 21z" stroke="#1F3D2B" stroke-width="1.6" stroke-linejoin="round"></path></svg></div>
+      <h3>Flowers</h3>
+      <p>Where we started, and still do properly.</p>
+    </div>
+    <div>
+      <div class="diff-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="#1F3D2B" stroke-width="1.6"></circle><path d="M12 7v5l3.2 2" stroke="#1F3D2B" stroke-width="1.6" stroke-linecap="round"></path></svg></div>
+      <h3>Beauty &amp; skincare</h3>
+      <p>Serums and staples, arranged like petals.</p>
+    </div>
+    <div>
+      <div class="diff-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="8" width="16" height="12" rx="1.5" stroke="#1F3D2B" stroke-width="1.6"></rect><path d="M4 8l8-4 8 4" stroke="#1F3D2B" stroke-width="1.6" stroke-linejoin="round"></path></svg></div>
+      <h3>Snacks &amp; treats</h3>
+      <p>A tin of someone's favourites, bound and wrapped.</p>
+    </div>
+    <div>
+      <div class="diff-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M4 12h16" stroke="#1F3D2B" stroke-width="1.6" stroke-linecap="round"></path><circle cx="12" cy="12" r="9" stroke="#1F3D2B" stroke-width="1.6"></circle></svg></div>
+      <h3>Almost anything else</h3>
+      <p>Tell us what they'd love — we'll find the shape.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS BY THE BOUQUETS: plays once, in one go, when you scroll into it -->
+<section id="events">
     <div class="glass" id="glass" aria-hidden="true">
       <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
     </div>
+    <div class="frost" id="frost" aria-hidden="true"></div>
 
-    <div class="hero">
-      <div class="hero-copy" id="heroCopy">
-        <p class="hero-eyebrow">Lahore, Pakistan · Est. 2025</p>
-        <h1>Any gift, gathered <em>like a bouquet.</em></h1>
-        <p class="lede">We started with flowers. Now we arrange anything worth giving — skincare, snacks, little everyday things — into a bouquet, wrapped and bound the same careful way.</p>
-        <div class="hero-ctas">
-          <a class="cta" href="#contact">Order a bouquet</a>
-          <a class="ghost-cta" href="#events">See Events by The Bouquets</a>
-        </div>
-      </div>
-      <div class="hero-mark" id="heroMark">
-        <svg viewBox="0 0 120 120" aria-hidden="true">
-          <g id="heroBody">
+    <div class="mark-wrap" aria-hidden="true">
+      <div class="seq-mark" id="seqMark">
+        <svg viewBox="0 0 120 120">
+          <g>
             <path d="M42,112 L78,112 L60,74 Z" fill="#8FA07E" stroke="#1F3D2B" stroke-width="1.6"></path>
             <line x1="60" y1="74" x2="24.6" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
             <line x1="60" y1="74" x2="41.2" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
@@ -242,7 +283,7 @@
             <line x1="60" y1="74" x2="78.8" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
             <line x1="60" y1="74" x2="95.4" y2="32.9" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
           </g>
-          <g id="heroHeads">
+          <g id="seqHeads">
             <ellipse cx="24.6" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-40 24.6 32.9)"></ellipse>
             <ellipse cx="41.2" cy="23.3" rx="13" ry="5.5" fill="#1F3D2B" transform="rotate(-20 41.2 23.3)"></ellipse>
             <ellipse cx="60" cy="20" rx="13" ry="5.5" fill="#C9A227" transform="rotate(0 60 20)"></ellipse>
@@ -252,9 +293,6 @@
         </svg>
       </div>
     </div>
-    <div class="scroll-hint" id="scrollHint">Scroll</div>
-
-    <div class="frost" id="frost" aria-hidden="true"></div>
     <canvas id="fx" aria-hidden="true"></canvas>
 
     <div class="finale" id="finale">
@@ -268,13 +306,10 @@
           <line x1="60" y1="74" x2="78.8" y2="23.3" stroke="#1F3D2B" stroke-width="2" stroke-linecap="round"></line>
           <ellipse cx="24.6" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-40 24.6 32.9)"></ellipse>
           <ellipse cx="41.2" cy="23.3" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(-20 41.2 23.3)"></ellipse>
-          <circle cx="60" cy="20" r="9" fill="none" stroke="#C9A227" stroke-width="1.6"></circle>
-          <line x1="60" y1="10" x2="60" y2="30" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
-          <line x1="50" y1="20" x2="70" y2="20" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
-          <line x1="52.9" y1="12.9" x2="67.1" y2="27.1" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
-          <line x1="67.1" y1="12.9" x2="52.9" y2="27.1" stroke="#C9A227" stroke-width="2" stroke-linecap="round"></line>
           <ellipse cx="78.8" cy="23.3" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(20 78.8 23.3)"></ellipse>
           <ellipse cx="95.4" cy="32.9" rx="13" ry="5.5" fill="#8FA07E" transform="rotate(40 95.4 32.9)"></ellipse>
+          <!-- marigold in the middle -->
+          <g class="marigold"><circle cx="67.60" cy="20.00" r="3.6" fill="#D9650F"></circle><circle cx="66.85" cy="23.30" r="3.6" fill="#D9650F"></circle><circle cx="64.74" cy="25.94" r="3.6" fill="#D9650F"></circle><circle cx="61.69" cy="27.41" r="3.6" fill="#D9650F"></circle><circle cx="58.31" cy="27.41" r="3.6" fill="#D9650F"></circle><circle cx="55.26" cy="25.94" r="3.6" fill="#D9650F"></circle><circle cx="53.15" cy="23.30" r="3.6" fill="#D9650F"></circle><circle cx="52.40" cy="20.00" r="3.6" fill="#D9650F"></circle><circle cx="53.15" cy="16.70" r="3.6" fill="#D9650F"></circle><circle cx="55.26" cy="14.06" r="3.6" fill="#D9650F"></circle><circle cx="58.31" cy="12.59" r="3.6" fill="#D9650F"></circle><circle cx="61.69" cy="12.59" r="3.6" fill="#D9650F"></circle><circle cx="64.74" cy="14.06" r="3.6" fill="#D9650F"></circle><circle cx="66.85" cy="16.70" r="3.6" fill="#D9650F"></circle><circle cx="64.78" cy="21.48" r="3.1" fill="#EE8A1C"></circle><circle cx="63.22" cy="23.83" r="3.1" fill="#EE8A1C"></circle><circle cx="60.64" cy="24.96" r="3.1" fill="#EE8A1C"></circle><circle cx="57.86" cy="24.52" r="3.1" fill="#EE8A1C"></circle><circle cx="55.76" cy="22.64" r="3.1" fill="#EE8A1C"></circle><circle cx="55.00" cy="19.93" r="3.1" fill="#EE8A1C"></circle><circle cx="55.83" cy="17.24" r="3.1" fill="#EE8A1C"></circle><circle cx="57.99" cy="15.42" r="3.1" fill="#EE8A1C"></circle><circle cx="60.78" cy="15.06" r="3.1" fill="#EE8A1C"></circle><circle cx="63.33" cy="16.27" r="3.1" fill="#EE8A1C"></circle><circle cx="64.82" cy="18.66" r="3.1" fill="#EE8A1C"></circle><circle cx="62.15" cy="21.47" r="2.5" fill="#F7AE2E"></circle><circle cx="60.19" cy="22.59" r="2.5" fill="#F7AE2E"></circle><circle cx="58.09" cy="21.77" r="2.5" fill="#F7AE2E"></circle><circle cx="57.43" cy="19.61" r="2.5" fill="#F7AE2E"></circle><circle cx="58.70" cy="17.75" r="2.5" fill="#F7AE2E"></circle><circle cx="60.95" cy="17.58" r="2.5" fill="#F7AE2E"></circle><circle cx="62.49" cy="19.24" r="2.5" fill="#F7AE2E"></circle><circle cx="60" cy="20" r="1.7" fill="#A94F08"></circle></g>
         </svg>
       </div>
       <div class="lockup" id="lockup">
@@ -287,8 +322,7 @@
         <a class="ghost-cta" href="#contact">Tell us what you're celebrating</a>
       </div>
     </div>
-  </div>
-</div>
+</section>
 
 <!-- MEET OUR CEO -->
 <section id="ceo">
@@ -336,34 +370,6 @@
     <div class="signoff">
       <p class="sig">Eeman Dar</p>
       <p class="role">CEO, The Bouquets</p>
-    </div>
-  </div>
-</section>
-
-<!-- THE IDEA -->
-<section id="difference">
-  <p class="section-label">The idea</p>
-  <h2>A bouquet was never really about the flowers. It's about how the giving looks.</h2>
-  <div class="diff-grid">
-    <div>
-      <div class="diff-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-4.35-9.5-8.5C.5 8.8 2.6 5 6.2 5c2 0 3.4 1.1 4 2.3.6-1.2 2-2.3 4-2.3 3.6 0 5.7 3.8 3.7 7.5C19 16.65 12 21 12 21z" stroke="#1F3D2B" stroke-width="1.6" stroke-linejoin="round"></path></svg></div>
-      <h3>Flowers</h3>
-      <p>Where we started, and still do properly.</p>
-    </div>
-    <div>
-      <div class="diff-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="#1F3D2B" stroke-width="1.6"></circle><path d="M12 7v5l3.2 2" stroke="#1F3D2B" stroke-width="1.6" stroke-linecap="round"></path></svg></div>
-      <h3>Beauty &amp; skincare</h3>
-      <p>Serums and staples, arranged like petals.</p>
-    </div>
-    <div>
-      <div class="diff-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="8" width="16" height="12" rx="1.5" stroke="#1F3D2B" stroke-width="1.6"></rect><path d="M4 8l8-4 8 4" stroke="#1F3D2B" stroke-width="1.6" stroke-linejoin="round"></path></svg></div>
-      <h3>Snacks &amp; treats</h3>
-      <p>A tin of someone's favourites, bound and wrapped.</p>
-    </div>
-    <div>
-      <div class="diff-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18M4 12h16" stroke="#1F3D2B" stroke-width="1.6" stroke-linecap="round"></path><circle cx="12" cy="12" r="9" stroke="#1F3D2B" stroke-width="1.6"></circle></svg></div>
-      <h3>Almost anything else</h3>
-      <p>Tell us what they'd love — we'll find the shape.</p>
     </div>
   </div>
 </section>
@@ -438,11 +444,10 @@
 
   if (reduced) return;
 
-  /* ---------- scroll sequence ---------- */
-  var seq = document.getElementById('seq'), stage = document.getElementById('stage');
+  /* ---------- Events firework sequence ---------- */
+  var stage = document.getElementById('events');
   var glass = document.getElementById('glass'), frost = document.getElementById('frost');
-  var heroCopy = document.getElementById('heroCopy'), heroMark = document.getElementById('heroMark');
-  var heroHeads = document.getElementById('heroHeads'), hint = document.getElementById('scrollHint');
+  var heroMark = document.getElementById('seqMark'), heroHeads = document.getElementById('seqHeads');
   var finale = document.getElementById('finale'), finaleLogo = document.getElementById('finaleLogo');
   var lockup = document.getElementById('lockup'), more = document.getElementById('finaleMore');
   var canvas = document.getElementById('fx'), ctx = canvas.getContext('2d');
@@ -453,7 +458,7 @@
     [78.8, 23.3, 20, '#1F3D2B'], [95.4, 32.9, 40, '#8FA07E']
   ];
 
-  var W = 0, H = 0, dpr = 1, geo = null, parts = [], lastP = -1, ticking = false;
+  var W = 0, H = 0, dpr = 1, geo = null, parts = [], curP = 0;
 
   function rectIn(el) {
     var s = stage.getBoundingClientRect(), r = el.getBoundingClientRect();
@@ -513,7 +518,7 @@
       };
     });
     geo.dot = Math.max(1.3, t.step * 0.42);
-    lastP = -1; render();
+    render(curP);
   }
 
   // Logo centre & size at progress p
@@ -526,24 +531,11 @@
   }
   function toScreen(L, x, y) { return [L.cx + (x - 60) / 120 * L.s, L.cy + (y - 60) / 120 * L.s]; }
 
-  function progress() {
-    var r = seq.getBoundingClientRect(), range = r.height - window.innerHeight;
-    return range > 0 ? clamp(-r.top / range, 0, 1) : 0;
-  }
-
-  function render() {
-    ticking = false;
+  function render(p) {
+    curP = p;
     if (!geo) return;
-    var p = progress();
-    if (Math.abs(p - lastP) < 0.0002) return;
-    lastP = p;
 
-    // Hero copy blurs away, glass background comes in
-    var fade = seg(p, 0.0, 0.14);
-    heroCopy.style.opacity = 1 - fade;
-    heroCopy.style.filter = 'blur(' + (fade * 14).toFixed(2) + 'px)';
-    heroCopy.style.transform = 'translateY(' + (-fade * 30).toFixed(1) + 'px) scale(' + (1 - fade * 0.04).toFixed(3) + ')';
-    hint.style.opacity = 1 - seg(p, 0, 0.04);
+    // Liquid-glass background comes in as the logo zooms
     var g = seg(p, 0.02, 0.2);
     glass.style.opacity = g; frost.style.opacity = g;
 
@@ -605,15 +597,51 @@
     ctx.globalAlpha = 1;
   }
 
-  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(render); } }
+  // ---- play once, in one go ----
+  var DURATION = 4600, state = 'idle';   // idle -> playing -> done
+  var KEYS = { 32: 1, 33: 1, 34: 1, 35: 1, 36: 1, 38: 1, 40: 1 };
+  function block(e) { e.preventDefault(); }
+  function blockKeys(e) { if (KEYS[e.keyCode]) e.preventDefault(); }
+  function lock(on) {
+    var f = on ? 'addEventListener' : 'removeEventListener';
+    window[f]('wheel', block, { passive: false });
+    window[f]('touchmove', block, { passive: false });
+    window[f]('keydown', blockKeys);
+  }
+  function finish() { state = 'done'; render(1); }
+  function play() {
+    if (state !== 'idle') return;
+    state = 'playing';
+    lock(true);
+    window.scrollTo({ top: stage.getBoundingClientRect().top + window.pageYOffset, behavior: 'smooth' });
+    var t0 = null;
+    function frame(now) {
+      if (t0 === null) t0 = now + 350;          // let the page settle onto the section first
+      var p = clamp((now - t0) / DURATION, 0, 1);
+      render(p);
+      if (p < 1) requestAnimationFrame(frame);
+      else { lock(false); finish(); }
+    }
+    requestAnimationFrame(frame);
+  }
+
   var resizeTimer;
   function onResize() { clearTimeout(resizeTimer); resizeTimer = setTimeout(layout, 150); }
 
   var fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
   Promise.all([fontsReady, document.fonts ? document.fonts.load('600 40px Fredoka') : null]).catch(function () {}).then(function () {
     layout();
-    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onResize);
+    // Already scrolled past it (e.g. after a reload)? Just show the finished frame.
+    if (stage.getBoundingClientRect().bottom <= 0) finish();
+    if (!('IntersectionObserver' in window)) { finish(); return; }
+    var io = new IntersectionObserver(function (entries) {
+      var e = entries[0];
+      if (!e.isIntersecting || state !== 'idle') return;
+      if (e.boundingClientRect.top > -10) play();   // arriving from above: play it
+      else finish();                                 // arriving from below: never play backwards
+    }, { threshold: [0.3] });
+    io.observe(stage);
   });
 })();
 </script>

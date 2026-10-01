@@ -254,6 +254,78 @@
     .card:hover .art svg, .chip[aria-pressed="true"] svg, .door:hover .floaters svg { animation: none !important; }
   }
 
+  /* ---------- Phool Market (desi flower stall) ---------- */
+  #phool-market { position: relative; background: #FFF4E2; padding: 0 0 10vh; overflow: hidden; }
+  .awning { position: relative; height: 92px; background: repeating-linear-gradient(90deg, #F28AA0 0 46px, #FFF4E2 46px 92px, #F6C445 92px 138px, #FFF4E2 138px 184px, #7DBE9C 184px 230px, #FFF4E2 230px 276px);
+    border-bottom: 3px solid var(--forest); transform-origin: top center; }
+  .awning::after { content: ''; position: absolute; left: 0; right: 0; bottom: -23px; height: 24px;
+    background: repeating-linear-gradient(90deg, #F28AA0 0 46px, #FFF4E2 46px 92px, #F6C445 92px 138px, #FFF4E2 138px 184px, #7DBE9C 184px 230px, #FFF4E2 230px 276px);
+    -webkit-mask: radial-gradient(circle 23px at 23px 0, #000 98%, transparent 100%) 0 0 / 46px 24px repeat-x;
+            mask: radial-gradient(circle 23px at 23px 0, #000 98%, transparent 100%) 0 0 / 46px 24px repeat-x; }
+  .garland { position: absolute; left: 0; right: 0; top: 88px; height: 70px; z-index: 2; pointer-events: none; }
+  .garland svg { width: 100%; height: 100%; display: block; }
+  .garland .sway { transform-origin: 50% 0; animation: sway 4s ease-in-out infinite alternate; }
+  @keyframes sway { from { transform: rotate(-0.6deg); } to { transform: rotate(0.6deg); } }
+
+  .signboard { position: relative; z-index: 3; margin: 46px auto 0; width: fit-content; max-width: calc(100% - 32px); text-align: center; background: #B7794A;
+    background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.06) 0 2px, transparent 2px 9px); border: 3px solid var(--forest); border-radius: 16px; padding: 14px 30px 16px; box-shadow: 5px 5px 0 var(--forest); transform: rotate(-1.5deg); }
+  .signboard::before, .signboard::after { content: ''; position: absolute; top: -40px; width: 3px; height: 40px; background: var(--forest); }
+  .signboard::before { left: 22%; } .signboard::after { right: 22%; }
+  .signboard h2 { margin: 0; font-family: var(--brand-font); font-weight: 600; font-size: clamp(34px, 5vw, 56px); color: #FFF4E2; line-height: 1; text-shadow: 2px 2px 0 var(--forest); }
+  .signboard h2 .ur { font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif; font-size: 0.7em; margin-left: 10px; color: #F6C445; }
+  .signboard p { margin: 6px 0 0; color: #FFF4E2; font-size: 15px; font-weight: 600; letter-spacing: 0.04em; }
+  .phool-intro { text-align: center; max-width: 560px; margin: 24px auto 0; padding: 0 6vw; color: var(--text-muted); font-size: 16px; line-height: 1.6; position: relative; z-index: 3; }
+
+  .stall-tabs { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; padding: 26px 16px 6px; position: relative; z-index: 3; }
+  .stall-tab { position: relative; border: 2px solid var(--forest); background: #FFFFFF; color: var(--forest); font: 600 15px 'Karla', sans-serif; padding: 9px 18px; border-radius: 12px; cursor: pointer; box-shadow: 3px 3px 0 var(--forest); }
+  .stall-tab small { display: block; font-weight: 500; font-size: 12px; color: var(--text-soft); }
+  .stall-tab[aria-pressed="true"] { background: #F6C445; transform: rotate(-2deg) translateY(-2px); }
+  .stall-tab[aria-pressed="true"] small { color: var(--forest); }
+
+  .stall-wrap { display: grid; grid-template-columns: 1fr 340px; gap: 26px; max-width: 1240px; margin: 18px auto 0; padding: 0 6vw; position: relative; z-index: 3; align-items: start; }
+  .counter { position: relative; background: #FFFDF6; border: 3px solid var(--forest); border-radius: 22px; padding: 22px 18px 0; box-shadow: 5px 5px 0 var(--forest); overflow: hidden; }
+  .truck-art { height: 26px; margin: 14px -18px 0; border-top: 3px solid var(--forest);
+    background: linear-gradient(135deg, #F28AA0 25%, transparent 25%) -13px 0 / 26px 26px, linear-gradient(225deg, #F6C445 25%, transparent 25%) -13px 0 / 26px 26px, linear-gradient(315deg, #7DBE9C 25%, transparent 25%) 0 0 / 26px 26px, linear-gradient(45deg, #5BB6D6 25%, #FFF4E2 25%) 0 0 / 26px 26px; }
+  .buckets { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px 10px; }
+  .bucket { position: relative; border: 0; background: none; padding: 0 0 6px; cursor: pointer; text-align: center; color: var(--forest); border-radius: 18px; transition: transform 0.25s cubic-bezier(.3,1.6,.5,1); }
+  .bucket:hover { transform: translateY(-4px); }
+  .bucket:active { transform: scale(0.95); }
+  .bucket:focus-visible { outline: 3px solid #F6C445; outline-offset: 2px; }
+  .bucket svg { width: 100%; max-width: 150px; height: auto; display: block; margin: 0 auto; }
+  .bucket .heads { transform-origin: 60px 80px; }
+  .bucket:hover .heads { animation: wiggle 0.6s ease; }
+  .bucket.bump .heads { animation: pop 0.4s ease; }
+  .bucket .slate { display: inline-block; background: #2E3B33; color: #FFF8E6; font: 600 14px var(--brand-font); padding: 5px 12px 6px; border-radius: 8px; border: 2px solid #8A5A3C; margin-top: -4px; }
+  .bucket .slate small { display: block; font: 500 11px 'Karla', sans-serif; opacity: 0.8; }
+  .bucket .tag { position: absolute; top: 6px; right: 6px; background: #FFFFFF; border: 2px solid var(--forest); border-radius: 6px 6px 6px 14px; font: 700 11px 'Karla', sans-serif; padding: 3px 7px; transform-origin: top left; transform: rotate(8deg); }
+  .bucket:hover .tag { animation: wiggle 0.5s ease; }
+  .plus-one { position: fixed; z-index: 85; pointer-events: none; font: 700 18px var(--brand-font); color: var(--forest); background: #F6C445; border: 2px solid var(--forest); border-radius: 999px; padding: 2px 9px; }
+
+  .guldasta { position: sticky; top: 16px; background: #FFFFFF; border: 3px solid var(--forest); border-radius: 22px; padding: 18px; box-shadow: 5px 5px 0 var(--forest); }
+  .guldasta h3 { margin: 0; font-family: var(--brand-font); font-weight: 600; font-size: 24px; color: var(--forest); }
+  .guldasta .sub { margin: 2px 0 8px; font-size: 13px; color: var(--text-soft); }
+  .bunch-art { background: #FFF4E2; border-radius: 16px; border: 2px dashed rgba(31,61,43,0.35); }
+  .bunch-art svg { width: 100%; height: auto; display: block; }
+  .bunch-art .stem-new { animation: stemIn 0.45s cubic-bezier(.3,1.6,.5,1); transform-box: fill-box; transform-origin: 50% 100%; }
+  @keyframes stemIn { from { transform: scale(0.2); opacity: 0; } }
+  .stems-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; min-height: 28px; }
+  .stems-list .s { display: inline-flex; align-items: center; gap: 6px; background: #FFF4E2; border: 2px solid var(--forest); border-radius: 999px; padding: 3px 4px 3px 10px; font-size: 13px; font-weight: 600; color: var(--forest); }
+  .stems-list .s button { width: 22px; height: 22px; border-radius: 50%; border: 0; background: var(--forest); color: #FFF4E2; cursor: pointer; font-size: 13px; line-height: 1; }
+  .stems-list .hint { font-size: 13px; color: var(--text-soft); }
+  .wraps { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .guldasta .cta { width: 100%; text-align: center; }
+  .guldasta .cta[disabled] { opacity: 0.45; pointer-events: none; }
+  .guldasta .clear { display: block; margin: 8px auto 0; border: 0; background: none; color: var(--text-soft); text-decoration: underline; cursor: pointer; font-size: 13px; }
+
+  @media (max-width: 900px) {
+    .stall-wrap { grid-template-columns: 1fr; }
+    .guldasta { position: relative; top: 0; }
+    .buckets { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .garland .sway, .bucket:hover .heads, .bucket.bump .heads, .bucket:hover .tag, .bunch-art .stem-new { animation: none !important; }
+  }
+
   /* ---------- reveal helper ---------- */
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.8,.2,1); }
   .reveal.in { opacity: 1; transform: none; }
@@ -363,6 +435,7 @@
   </div>
   <div class="nav-links">
     <a class="nav-link" href="#marketplace">Marketplace</a>
+    <a class="nav-link" href="#phool-market">Phool Market</a>
     <a class="nav-link" href="#events">Events</a>
     <a class="nav-link" href="#ceo">Our CEO</a>
     <a class="nav-link" href="#contact">Contact</a>
@@ -396,7 +469,7 @@
       <span class="tag">For gifting</span>
       <div class="floaters" aria-hidden="true"><span data-icon="box" data-c1="#F4C6C1" data-c2="#E0857F"></span><span data-icon="cake" data-c1="#FBF8EC" data-c2="#E0857F"></span><span data-icon="candle" data-c1="#F8D3B0" data-c2="#E5965A"></span></div>
       <h2>Marketplace</h2>
-      <p>Bouquets, gift boxes, baskets, custom cakes, candles and gift wrapping, all made your way.</p>
+      <p>Bouquets, gift boxes, baskets, custom cakes, candles, gift wrapping and our Phool Market, all made your way.</p>
       <span class="go">Start shopping <span>→</span></span>
     </a>
     <a class="door events bouncy" href="#events">
@@ -453,6 +526,34 @@
   <p class="shelf-note">Prices depend on what you choose, so we confirm them with you on WhatsApp before anything is made.</p>
 </section>
 
+
+<!-- PHOOL MARKET: desi flower stall -->
+<section id="phool-market" aria-labelledby="phool-title">
+  <div class="awning" aria-hidden="true"></div>
+  <div class="garland" aria-hidden="true" id="garland"></div>
+  <div class="signboard">
+    <h2 id="phool-title">Phool Market <span class="ur" lang="ur">پھول</span></h2>
+    <p>Har phool, pyaar se · every flower, with love</p>
+  </div>
+  <p class="phool-intro">Walk the stalls, tap a bucket to pick a stem, and watch your own guldasta come together at the counter. Wrap it in akhbar, kraft, pastel or truck-art paper and we'll put it together for you.</p>
+  <div class="stall-tabs" role="toolbar" aria-label="Flower stalls" id="stallTabs"></div>
+  <div class="stall-wrap">
+    <div class="counter">
+      <div class="buckets" id="buckets"></div>
+      <div class="truck-art" aria-hidden="true"></div>
+    </div>
+    <aside class="guldasta" aria-labelledby="gul-title">
+      <h3 id="gul-title">Aapka guldasta</h3>
+      <p class="sub">Your bunch, stem by stem</p>
+      <div class="bunch-art" id="bunchArt"></div>
+      <div class="stems-list" id="stemsList"></div>
+      <div class="field" style="margin-bottom:6px"><label style="display:block;font:600 12px 'Karla',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--label);margin-bottom:6px">Wrap it in</label>
+        <div class="wraps opts" id="wraps"></div></div>
+      <button class="cta pill bouncy" id="addBunch" disabled>Add guldasta to basket</button>
+      <button class="clear" id="clearBunch">Start again</button>
+    </aside>
+  </div>
+</section>
 
 <!-- EVENTS BY THE BOUQUETS: plays once, in one go, when you scroll into it -->
 <section id="events">
@@ -1052,6 +1153,7 @@
   var BY_ID = {};
   ['market', 'events'].forEach(function (k) { CATALOG[k].forEach(function (c) { BY_ID[c.id] = c; }); });
   function palOf(item, cat) { return item.pal || cat.pal; }
+  function catOf(id) { return BY_ID[id] || { id: id, name: 'Phool Market', icon: 'box', opts: [] }; }
   function palColours(p) { return PALETTES[p] || p; }
 
   // ---------- fill icon placeholders ----------
@@ -1231,8 +1333,8 @@
   var waBtn = document.getElementById('waOrder'), details = document.getElementById('orderDetails');
   function describe(l) {
     var bits = Object.keys(l.opts).map(function (k) { return k + ': ' + l.opts[k]; });
-    bits.push('Colours: ' + l.colours);
-    bits.push((BY_ID[l.cat].event ? 'Guests: ' : 'Qty: ') + l.qty);
+    if (l.colours) bits.push('Colours: ' + l.colours);
+    bits.push((catOf(l.cat).event ? 'Guests: ' : 'Qty: ') + l.qty);
     return bits;
   }
   function renderBasket() {
@@ -1243,7 +1345,7 @@
       list.innerHTML = '<div class="empty">' + icon('basket', 'Blush') + '<p>Your basket is empty.<br>Pick something lovely from the Marketplace or Events.</p></div>';
     } else {
       list.innerHTML = basket.map(function (l, i) {
-        var cat = BY_ID[l.cat];
+        var cat = catOf(l.cat);
         return '<div class="line"><div class="art" style="--bg:' + l.pal[0] + '66">' + icon(cat.icon, l.pal) + '</div><div><h4>' + esc(l.item) + '</h4>' +
           '<div class="meta">' + esc(describe(l).join(' · ')) + (l.note ? '<br>“' + esc(l.note) + '”' : '') + '</div></div>' +
           '<button class="rm" data-rm="' + i + '">Remove</button></div>';
@@ -1255,7 +1357,7 @@
   function message() {
     var out = ["Hi The Bouquets! I'd like to order:", ''];
     basket.forEach(function (l, i) {
-      out.push((i + 1) + '. ' + l.item + ' (' + BY_ID[l.cat].name + ')');
+      out.push((i + 1) + '. ' + l.item + ' (' + catOf(l.cat).name + ')');
       out.push('   ' + describe(l).join(' · '));
       if (l.note) out.push('   Note: "' + l.note + '"');
     });
@@ -1276,6 +1378,266 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeDrawer(); });
   waBtn.addEventListener('click', function () { toast('Opening WhatsApp…'); });
   renderBasket();
+  window.TB = {
+    add: add,
+    register: function (cat) { BY_ID[cat.id] = cat; renderBasket(); },
+    addIcon: function (name, fn) { ICONS[name] = fn; }
+  };
+})();
+</script>
+
+<script>
+/* ================= Phool Market ================= */
+(function () {
+  var TB = window.TB;
+  if (!TB) return;
+  var INK = '#1F3D2B';
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function f(n) { return (Math.round(n * 100) / 100).toString(); }
+
+  // ---------- flower heads (drawn around 0,0, about 10 units across the radius) ----------
+  var SHAPES = {
+    daisy: function (a) {
+      var s = '';
+      for (var i = 0; i < 8; i++) s += '<ellipse cx="0" cy="-6" rx="2.5" ry="4.3" transform="rotate(' + (i * 45) + ')"' + a + '/>';
+      return s;
+    },
+    rose: function (a) {
+      return '<circle r="8.6"' + a + '/><path d="M-1 0a1.6 1.6 0 1 1 3.2 0a3.2 3.2 0 1 1-6.4 0a4.8 4.8 0 1 1 9.6 0" fill="none" stroke="' + INK + '" stroke-opacity=".55" stroke-width="1.1"/>';
+    },
+    tulip: function (a) { return '<path d="M-7.5-6Q-9 8 0 9Q9 8 7.5-6L3.6-1.2L0-8.5L-3.6-1.2Z"' + a + '/>'; },
+    sunflower: function (a) {
+      var s = '';
+      for (var i = 0; i < 12; i++) s += '<ellipse cx="0" cy="-7" rx="2.2" ry="3.8" transform="rotate(' + (i * 30) + ')"' + a + '/>';
+      return s;
+    },
+    lily: function (a) {
+      var s = '';
+      for (var i = 0; i < 6; i++) s += '<path d="M0 0Q-3.2-5 0-10.5Q3.2-5 0 0Z" transform="rotate(' + (i * 60) + ')"' + a + '/>';
+      return s;
+    },
+    marigold: function (a, c) {
+      var s = '', rings = [[12, 6.6, 3.1, c], [9, 4.2, 2.8, '#F29A1C'], [6, 2.2, 2.2, '#F7B733']];
+      rings.forEach(function (r) {
+        for (var i = 0; i < r[0]; i++) {
+          var t = i / r[0] * Math.PI * 2;
+          s += '<circle cx="' + f(Math.cos(t) * r[1]) + '" cy="' + f(Math.sin(t) * r[1]) + '" r="' + r[2] + '" fill="' + r[3] + '" stroke="' + INK + '" stroke-width=".6"/>';
+        }
+      });
+      return s;
+    },
+    lavender: function (a) {
+      var s = '';
+      for (var i = 0; i < 7; i++) s += '<ellipse cx="' + (i % 2 ? 1.6 : -1.6) + '" cy="' + (-10 + i * 2.8) + '" rx="2.4" ry="1.9"' + a + '/>';
+      return s;
+    },
+    tuberose: function (a) {
+      var s = '<path d="M0-11V9" stroke="#7E9470" stroke-width="1.4"/>';
+      for (var i = 0; i < 6; i++) s += '<circle cx="' + (i % 2 ? 2.4 : -2.4) + '" cy="' + (-10 + i * 3.4) + '" r="2.2"' + a + '/>';
+      return s;
+    },
+    jasmine: function (a) {
+      var s = '';
+      [[-4, -3], [4, -2], [0, 4]].forEach(function (p) {
+        for (var i = 0; i < 5; i++) s += '<ellipse cx="' + p[0] + '" cy="' + (p[1] - 2.6) + '" rx="1.5" ry="2.6" transform="rotate(' + (i * 72) + ' ' + p[0] + ' ' + p[1] + ')"' + a + '/>';
+        s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="1" fill="#F7D774"/>';
+      });
+      return s;
+    }
+  };
+  var CENTRES = { daisy: ['#F2C230', 2.8], sunflower: ['#6B4423', 4.6] };
+
+  function head(type, style, c, x, y, sc) {
+    var main, over = '';
+    if (style === 'pipe') {
+      main = ' fill="none" stroke="' + c + '" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"';
+      over = SHAPES[type](' fill="none" stroke="#FFFFFF" stroke-opacity=".7" stroke-width="1" stroke-dasharray=".1 2" stroke-linecap="round"', c);
+    } else {
+      main = ' fill="' + c + '" stroke="' + INK + '" stroke-width="1"';
+      if (style === 'crochet') over = '<g transform="scale(.66)">' + SHAPES[type](' fill="none" stroke="#FFFFFF" stroke-opacity=".75" stroke-width="1.2" stroke-dasharray="1.2 1.3"', c) + '</g>';
+    }
+    var centre = CENTRES[type] ? '<circle r="' + CENTRES[type][1] + '" fill="' + CENTRES[type][0] + '" stroke="' + INK + '" stroke-width="1"' + (style === 'crochet' ? ' stroke-dasharray="1.2 1"' : '') + '/>' : '';
+    return '<g transform="translate(' + f(x) + ' ' + f(y) + ') scale(' + f(sc) + ')">' + SHAPES[type](main, c) + over + centre + '</g>';
+  }
+
+  // ---------- stalls ----------
+  var STALLS = [
+    { id: 'crochet', name: 'Crochet Phool', sub: 'yarn flowers that never wilt', pot: 'basket', style: 'crochet', items: [
+      { name: 'Crochet rose', type: 'rose', c: '#EE8FA0' }, { name: 'Crochet tulip', type: 'tulip', c: '#F6C445' },
+      { name: 'Crochet sunflower', type: 'sunflower', c: '#F6C445' }, { name: 'Crochet daisy', type: 'daisy', c: '#FFFFFF' },
+      { name: 'Crochet lavender', type: 'lavender', c: '#A98BD3' }, { name: 'Crochet lily', type: 'lily', c: '#F9D2DA' } ] },
+    { id: 'pipe', name: 'Pipe-cleaner Phool', sub: 'fuzzy wire flowers', pot: 'tin', style: 'pipe', items: [
+      { name: 'Pipe-cleaner tulip', type: 'tulip', c: '#E5484D' }, { name: 'Pipe-cleaner daisy', type: 'daisy', c: '#B79CE0' },
+      { name: 'Pipe-cleaner sunflower', type: 'sunflower', c: '#F2B51E' }, { name: 'Pipe-cleaner rose', type: 'rose', c: '#F28AA0' },
+      { name: 'Pipe-cleaner lily', type: 'lily', c: '#5BB6D6' } ] },
+    { id: 'taaza', name: 'Taaza Phool', sub: 'fresh flowers', pot: 'bucket', style: 'fresh', items: [
+      { name: 'Gulab', en: 'Rose', type: 'rose', c: '#D7263D' }, { name: 'Genda', en: 'Marigold', type: 'marigold', c: '#E8781A' },
+      { name: 'Rajnigandha', en: 'Tuberose', type: 'tuberose', c: '#FFFFFF' }, { name: 'Motia', en: 'Jasmine', type: 'jasmine', c: '#FFFFFF' },
+      { name: 'Lily', en: 'Lily', type: 'lily', c: '#F9D2DA' }, { name: 'Surajmukhi', en: 'Sunflower', type: 'sunflower', c: '#F6C445' } ] },
+    { id: 'gajra', name: 'Gajray & Haar', sub: 'for mehndi, shaadi & Eid', pot: 'thaal', style: 'fresh', piece: true, items: [
+      { name: 'Motia gajra (pair)', art: 'gajra', c: '#FFFFFF' }, { name: 'Gulab-motia gajra (pair)', art: 'gajra', c: '#D7263D' },
+      { name: 'Genda haar', art: 'haar', c: '#E8781A' }, { name: 'Gulab pattiyan (petals)', art: 'petals', c: '#D7263D' } ] }
+  ];
+
+  // ---------- containers ----------
+  function pot(kind) {
+    if (kind === 'basket') return '<path d="M20 80h80l-9 38H29z" fill="#D9A066" stroke="' + INK + '" stroke-width="2" stroke-linejoin="round"/><path d="M23 92h74M26 105h68M40 80v38M60 80v38M80 80v38" stroke="' + INK + '" stroke-width="1.2" stroke-opacity=".6"/><rect x="16" y="76" width="88" height="8" rx="4" fill="#C78A50" stroke="' + INK + '" stroke-width="2"/>';
+    if (kind === 'tin') return '<rect x="28" y="78" width="64" height="42" rx="4" fill="#5BB6D6" stroke="' + INK + '" stroke-width="2"/><path d="M28 92l8-6 8 6 8-6 8 6 8-6 8 6 8-6 8 6v8H28z" fill="#F28AA0" stroke="' + INK + '" stroke-width="1.2"/><circle cx="44" cy="110" r="3" fill="#F6C445" stroke="' + INK + '"/><circle cx="60" cy="110" r="3" fill="#FFFFFF" stroke="' + INK + '"/><circle cx="76" cy="110" r="3" fill="#F6C445" stroke="' + INK + '"/>';
+    if (kind === 'bucket') return '<path d="M26 80h68l-6 40H32z" fill="#B8C4CC" stroke="' + INK + '" stroke-width="2" stroke-linejoin="round"/><ellipse cx="60" cy="80" rx="34" ry="5" fill="#8FC7E0" stroke="' + INK + '" stroke-width="2"/><path d="M30 96h60" stroke="' + INK + '" stroke-opacity=".4"/>';
+    return '<ellipse cx="60" cy="108" rx="48" ry="12" fill="#D8DDE2" stroke="' + INK + '" stroke-width="2"/><ellipse cx="60" cy="105" rx="38" ry="8" fill="#EEF1F4" stroke="' + INK + '" stroke-opacity=".4"/>';
+  }
+  function piece(art, c) {
+    var s = '';
+    if (art === 'gajra') {
+      for (var i = 0; i < 16; i++) { var t = i / 16 * Math.PI * 2; s += '<circle cx="' + f(60 + Math.cos(t) * 26) + '" cy="' + f(78 + Math.sin(t) * 13) + '" r="4.2" fill="' + (c !== '#FFFFFF' && i % 3 === 0 ? c : '#FFFFFF') + '" stroke="' + INK + '" stroke-width="1"/>'; }
+      return s + '<path d="M86 78q10 4 6 16M88 80q14 0 12 12" fill="none" stroke="#7E9470" stroke-width="2"/>';
+    }
+    if (art === 'haar') {
+      for (var j = 0; j < 22; j++) { var u = j / 21 * Math.PI; s += '<circle cx="' + f(60 + Math.cos(u) * 38) + '" cy="' + f(40 + Math.sin(u) * 52) + '" r="5" fill="' + (j % 2 ? c : '#F7B733') + '" stroke="' + INK + '" stroke-width="1"/>'; }
+      return s;
+    }
+    for (var k = 0; k < 26; k++) { s += '<ellipse cx="' + f(28 + (k * 37 % 64)) + '" cy="' + f(92 + (k * 13 % 14)) + '" rx="4" ry="2.6" transform="rotate(' + (k * 47 % 180) + ' ' + f(28 + (k * 37 % 64)) + ' ' + f(92 + (k * 13 % 14)) + ')" fill="' + c + '" stroke="' + INK + '" stroke-width=".7"/>'; }
+    return s;
+  }
+  var SPOTS = [[38, 44], [60, 30], [82, 44], [48, 60], [72, 60]];
+  function bucketArt(stall, it) {
+    var body = '';
+    if (stall.piece) body = pot('thaal') + '<g class="heads">' + piece(it.art, it.c) + '</g>';
+    else {
+      var stems = '', heads = '';
+      SPOTS.forEach(function (p) {
+        stems += '<path d="M60 84L' + p[0] + ' ' + p[1] + '" stroke="#7E9470" stroke-width="2.4" stroke-linecap="round"/>';
+        heads += head(it.type, stall.style, it.c, p[0], p[1], 1.25);
+      });
+      body = stems + '<g class="heads">' + heads + '</g>' + pot(stall.pot);
+    }
+    return '<svg viewBox="0 0 120 126" aria-hidden="true">' + body + '</svg>';
+  }
+
+  // ---------- garland ----------
+  (function () {
+    var g = document.getElementById('garland'), s = '<svg viewBox="0 0 1200 70" preserveAspectRatio="none"><g class="sway">';
+    for (var k = 0; k < 4; k++) {
+      for (var i = 0; i <= 24; i++) {
+        var t = i / 24, x = k * 300 + t * 300, y = 6 + Math.sin(t * Math.PI) * 42;
+        s += '<circle cx="' + f(x) + '" cy="' + f(y) + '" r="7" fill="' + (i % 3 === 1 ? '#F7B733' : '#E8781A') + '" stroke="' + INK + '" stroke-width="1"/>';
+      }
+      s += '<circle cx="' + (k * 300 + 150) + '" cy="58" r="5" fill="#D7263D" stroke="' + INK + '"/><path d="M' + (k * 300 + 150) + ' 62v6" stroke="' + INK + '"/>';
+    }
+    g.innerHTML = s + '</g></svg>';
+  })();
+
+  // ---------- stall tabs + buckets ----------
+  var tabs = document.getElementById('stallTabs'), buckets = document.getElementById('buckets');
+  tabs.innerHTML = STALLS.map(function (st, i) {
+    return '<button class="stall-tab bouncy" aria-pressed="' + (i === 0) + '" data-stall="' + st.id + '">' + st.name + '<small>' + st.sub + '</small></button>';
+  }).join('');
+  var current = STALLS[0];
+  function showStall(id) {
+    current = STALLS.filter(function (s) { return s.id === id; })[0];
+    tabs.querySelectorAll('.stall-tab').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.stall === id); });
+    buckets.innerHTML = current.items.map(function (it, i) {
+      var label = current.piece ? 'Add ' + it.name + ' to basket' : 'Add one ' + it.name + ' stem to your guldasta';
+      return '<button class="bucket" data-i="' + i + '" aria-label="' + label + '">' + bucketArt(current, it) +
+        '<span class="tag">' + (current.piece ? '+ basket' : '+1') + '</span>' +
+        '<span class="slate">' + it.name + (it.en && it.en !== it.name ? '<small>' + it.en + '</small>' : '') + '</span></button>';
+    }).join('');
+  }
+  tabs.addEventListener('click', function (e) { var b = e.target.closest('.stall-tab'); if (b) showStall(b.dataset.stall); });
+  showStall('crochet');
+
+  // ---------- guldasta builder ----------
+  var WRAPS = { Akhbar: ['#ECE6D6', '#8C8473'], Kraft: ['#C89B6D', '#8A5A3C'], Pastel: ['#F6C9CF', '#E0857F'], 'Truck-art': ['#5BB6D6', '#F28AA0'] };
+  var bunch = [], wrap = 'Akhbar', lastAdded = -1;
+  var art = document.getElementById('bunchArt'), list = document.getElementById('stemsList'), addBtn = document.getElementById('addBunch');
+  document.getElementById('wraps').innerHTML = Object.keys(WRAPS).map(function (w) {
+    return '<label class="opt"><input type="radio" name="wrap" value="' + w + '"' + (w === wrap ? ' checked' : '') + '><span>' + w + '</span></label>';
+  }).join('');
+  document.getElementById('wraps').addEventListener('change', function (e) { wrap = e.target.value; lastAdded = -1; drawBunch(); });
+
+  function cone(w) {
+    var c = WRAPS[w], s = '<path d="M64 150L136 150L100 236Z" fill="' + c[0] + '" stroke="' + INK + '" stroke-width="2.4" stroke-linejoin="round"/>';
+    if (w === 'Akhbar') for (var i = 0; i < 7; i++) s += '<path d="M' + (72 + i * 2.6) + ' ' + (160 + i * 9) + 'h' + (52 - i * 6.5) + '" stroke="' + c[1] + '" stroke-width="2" stroke-dasharray="6 3"/>';
+    if (w === 'Kraft') s += '<path d="M78 170l28 40M92 160l22 30" stroke="' + c[1] + '" stroke-opacity=".5" stroke-width="1.5"/>';
+    if (w === 'Pastel') s += '<path d="M70 166h60M78 186h44M86 206h28" stroke="#FFFFFF" stroke-width="3"/>';
+    if (w === 'Truck-art') s += '<path d="M68 160l8 8 8-8 8 8 8-8 8 8 8-8 8 8 8-8M76 182l6 6 6-6 6 6 6-6 6 6 6-6 6 6" fill="none" stroke="#F6C445" stroke-width="3"/><circle cx="100" cy="206" r="5" fill="#F28AA0" stroke="' + INK + '"/>';
+    return s + '<path d="M84 152q16 14 32 0" fill="none" stroke="' + c[1] + '" stroke-width="3"/><path d="M100 160l-10 14M100 160l10 14" stroke="' + c[1] + '" stroke-width="3" stroke-linecap="round"/>';
+  }
+  function drawBunch() {
+    var n = bunch.length, shown = bunch.slice(0, 18), stems = '', heads = '';
+    shown.forEach(function (s, i) {
+      var k = shown.length, ang = k === 1 ? 0 : (-58 + 116 * i / (k - 1)), len = 74 + (i % 3) * 14;
+      var rad = ang * Math.PI / 180, x = 100 + Math.sin(rad) * len, y = 160 - Math.cos(rad) * len;
+      var cls = i === lastAdded ? ' class="stem-new"' : '';
+      stems += '<path' + cls + ' d="M100 168L' + f(x) + ' ' + f(y) + '" stroke="#7E9470" stroke-width="2.4" stroke-linecap="round"/>';
+      heads += '<g' + cls + '>' + head(s.type, s.style, s.c, x, y, 1.45) + '</g>';
+    });
+    var empty = n ? '' : '<text x="100" y="92" text-anchor="middle" font-family="Karla, sans-serif" font-size="12" fill="#5B6B5D">Tap a bucket to add a stem</text>';
+    art.innerHTML = '<svg viewBox="0 0 200 244" role="img" aria-label="Your guldasta with ' + n + ' stems">' + stems + heads + cone(wrap) + empty +
+      (n > 18 ? '<text x="100" y="20" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="14" fill="#1F3D2B">+' + (n - 18) + ' more</text>' : '') + '</svg>';
+    var counts = {};
+    bunch.forEach(function (s) { counts[s.name] = (counts[s.name] || 0) + 1; });
+    var names = Object.keys(counts);
+    list.innerHTML = names.length ? names.map(function (nm) {
+      return '<span class="s">' + nm + ' ×' + counts[nm] + '<button data-less="' + nm + '" aria-label="Remove one ' + nm + '">−</button></span>';
+    }).join('') : '<span class="hint">No stems yet. Pick from any stall and mix them up!</span>';
+    addBtn.disabled = !n;
+    addBtn.textContent = n ? 'Add guldasta to basket (' + n + ' stem' + (n > 1 ? 's' : '') + ')' : 'Add guldasta to basket';
+  }
+  list.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-less]');
+    if (!b) return;
+    for (var i = bunch.length - 1; i >= 0; i--) if (bunch[i].name === b.dataset.less) { bunch.splice(i, 1); break; }
+    lastAdded = -1; drawBunch();
+  });
+  document.getElementById('clearBunch').addEventListener('click', function () { bunch = []; lastAdded = -1; drawBunch(); });
+
+  function plusOne(el, text) {
+    if (reduced) return;
+    var r = el.getBoundingClientRect(), p = document.createElement('span');
+    p.className = 'plus-one'; p.textContent = text;
+    p.style.left = (r.left + r.width / 2 - 16) + 'px'; p.style.top = (r.top + 20) + 'px';
+    document.body.appendChild(p);
+    p.animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: 'translateY(-60px)', opacity: 0 }], { duration: 800, easing: 'ease-out' }).onfinish = function () { p.remove(); };
+  }
+
+  // basket integration
+  TB.addIcon('bunch', function () {
+    return '<path d="M32 40L20 18M32 40V12M32 40L44 18" fill="none" stroke-width="2.2"/>' +
+      '<circle cx="20" cy="17" r="6" fill="#EE8FA0"/><circle cx="44" cy="17" r="6" fill="#F6C445"/><circle cx="32" cy="11" r="6.5" fill="#E8781A"/>' +
+      '<path d="M18 36h28L32 60z" fill="var(--c1)"/><path d="M24 42h16M27 48h10" stroke="var(--c2)" stroke-width="2"/>';
+  });
+  TB.addIcon('gajra', function () {
+    var s = '';
+    for (var i = 0; i < 12; i++) { var t = i / 12 * Math.PI * 2; s += '<circle cx="' + f(32 + Math.cos(t) * 18) + '" cy="' + f(34 + Math.sin(t) * 12) + '" r="4.4" fill="' + (i % 3 ? '#FFFFFF' : 'var(--c2)') + '"/>'; }
+    return s;
+  });
+  TB.register({ id: 'phool', name: 'Phool Market guldasta', icon: 'bunch', opts: [] });
+  TB.register({ id: 'phool-piece', name: 'Phool Market', icon: 'gajra', opts: [] });
+
+  buckets.addEventListener('click', function (e) {
+    var b = e.target.closest('.bucket');
+    if (!b) return;
+    var it = current.items[+b.dataset.i];
+    b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
+    if (current.piece) {
+      TB.add({ cat: 'phool-piece', item: it.name, opts: {}, colours: '', pal: ['#F3E9C8', it.c === '#FFFFFF' ? '#C9A227' : it.c], note: '', qty: 1 }, b);
+      return;
+    }
+    bunch.push({ name: it.name, type: it.type, style: current.style, c: it.c });
+    lastAdded = Math.min(bunch.length, 18) - 1;
+    plusOne(b, '+1');
+    drawBunch();
+  });
+  addBtn.addEventListener('click', function () {
+    if (!bunch.length) return;
+    var counts = {};
+    bunch.forEach(function (s) { counts[s.name] = (counts[s.name] || 0) + 1; });
+    var stems = Object.keys(counts).map(function (k) { return k + ' ×' + counts[k]; }).join(', ');
+    TB.add({ cat: 'phool', item: 'My guldasta (' + bunch.length + ' stems)', opts: { Stems: stems, Wrap: wrap }, colours: '', pal: WRAPS[wrap], note: '', qty: 1 }, addBtn);
+    bunch = []; lastAdded = -1; drawBunch();
+  });
+  drawBunch();
 })();
 </script>
 
